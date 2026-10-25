@@ -4,372 +4,475 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Desktop Portfolio</title>
-  <meta name="description" content="An interactive retro desktop operating system portfolio experience.">
+  <meta name="description" content="A modern desktop operating system portfolio experience featuring interactive apps, projects, and skills.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=MS+Sans+Serif&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="desktop-screen" id="desktop">
 
-  <!-- Desktop Surface Area -->
+  <!-- Desktop Surface Canvas -->
   <main class="desktop-canvas" id="desktopCanvas" aria-label="Desktop Surface">
-    <!-- Desktop selection marquee box (dynamically created on drag) -->
+
+    <!-- Desktop Icons Grid (2 Columns on the Left matching reference image) -->
+    <div class="desktop-grid" id="desktopGrid" role="list" aria-label="Desktop Applications">
+      
+      <!-- COLUMN 1, ROW 1: Computer -->
+      <div class="desktop-icon-col">
+        <button class="desktop-icon" id="appComputer" data-app="computer" role="listitem" tabindex="0" aria-label="Computer - About Me">
+          <div class="icon-visual">
+            <svg viewBox="0 0 48 48" width="44" height="44">
+              <!-- Monitor stand base -->
+              <ellipse cx="24" cy="42" rx="12" ry="3" fill="#1e293b" opacity="0.4"/>
+              <path d="M18 36h12v4H18z" fill="#94a3b8"/>
+              <path d="M12 40h24v2H12z" fill="#64748b"/>
+              <!-- Monitor Frame -->
+              <rect x="5" y="8" width="38" height="28" rx="3" fill="#334155" stroke="#475569" stroke-width="1.5"/>
+              <rect x="7" y="10" width="34" height="24" rx="1.5" fill="#0284c7"/>
+              <!-- Screen content / glossy reflection -->
+              <path d="M7 10h34L26 34H7z" fill="#38bdf8" opacity="0.25"/>
+              <circle cx="24" cy="18" r="4.5" fill="#ffffff" opacity="0.9"/>
+              <path d="M16 28c0-4 3.5-6 8-6s8 2 8 6" fill="#ffffff" opacity="0.9"/>
+              <circle cx="24" cy="35" r="1" fill="#38bdf8"/>
+            </svg>
+          </div>
+          <span class="icon-title">Computer</span>
+          <span class="icon-sub">About Me</span>
+        </button>
+
+        <!-- COLUMN 1, ROW 2: Resume -->
+        <button class="desktop-icon" id="appResume" data-app="resume" role="listitem" tabindex="0" aria-label="Resume - Download">
+          <div class="icon-visual">
+            <svg viewBox="0 0 48 48" width="44" height="44">
+              <!-- Shadow -->
+              <rect x="11" y="7" width="28" height="36" rx="3" fill="#000" opacity="0.25"/>
+              <!-- White document page -->
+              <path d="M10 6h18l10 10v26a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+              <!-- Folded corner -->
+              <path d="M28 6v10h10" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1"/>
+              <!-- Red PDF Badge -->
+              <rect x="14" y="20" width="20" height="11" rx="2" fill="#ef4444"/>
+              <text x="24" y="28" fill="#ffffff" font-family="'Segoe UI', sans-serif" font-weight="bold" font-size="7.5" text-anchor="middle" letter-spacing="0.5">PDF</text>
+              <!-- Content lines -->
+              <line x1="14" y1="35" x2="34" y2="35" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="14" y1="39" x2="26" y2="39" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="icon-title">Resume</span>
+          <span class="icon-sub">Download</span>
+        </button>
+
+        <!-- COLUMN 1, ROW 3: Skills -->
+        <button class="desktop-icon" id="appSkills" data-app="skills" role="listitem" tabindex="0" aria-label="Skills - Tech Stack">
+          <div class="icon-visual">
+            <svg viewBox="0 0 48 48" width="44" height="44">
+              <!-- Terminal Window Frame -->
+              <rect x="6" y="9" width="36" height="30" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+              <path d="M6 13a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v4H6v-4z" fill="#1e293b"/>
+              <!-- Window dots -->
+              <circle cx="11" cy="13" r="1.5" fill="#ef4444"/>
+              <circle cx="16" cy="13" r="1.5" fill="#f59e0b"/>
+              <circle cx="21" cy="13" r="1.5" fill="#10b981"/>
+              <!-- Command prompt text -->
+              <text x="11" y="27" fill="#38bdf8" font-family="'Fira Code', monospace" font-weight="bold" font-size="11">&gt;_</text>
+              <rect x="25" y="21" width="6" height="9" fill="#10b981" opacity="0.8">
+                <animate attributeName="opacity" values="0.8;0;0.8" dur="1s" repeatCount="indefinite"/>
+              </rect>
+            </svg>
+          </div>
+          <span class="icon-title">Skills</span>
+          <span class="icon-sub">Tech Stack</span>
+        </button>
+
+        <!-- COLUMN 1, ROW 4: Gallery -->
+        <button class="desktop-icon" id="appGallery" data-app="gallery" role="listitem" tabindex="0" aria-label="Gallery - Snapshots">
+          <div class="icon-visual">
+            <svg viewBox="0 0 48 48" width="44" height="44">
+              <!-- Picture frame -->
+              <rect x="6" y="8" width="36" height="32" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+              <!-- Photo area -->
+              <rect x="9" y="11" width="30" height="26" rx="2" fill="#0284c7"/>
+              <!-- Sun / Sky -->
+              <circle cx="17" cy="18" r="3.5" fill="#fde047"/>
+              <!-- Mountain silhouette inside photo -->
+              <polygon points="9,37 20,25 28,33 39,21 39,37" fill="#0369a1"/>
+              <polygon points="12,37 22,27 29,34 39,24 39,37" fill="#075985" opacity="0.8"/>
+            </svg>
+          </div>
+          <span class="icon-title">Gallery</span>
+          <span class="icon-sub">Snapshots</span>
+        </button>
+
+        <!-- COLUMN 1, ROW 5: Playground -->
+        <button class="desktop-icon" id="appPlayground" data-app="playground" role="listitem" tabindex="0" aria-label="Playground - Side Projects">
+          <div class="icon-visual">
+            <svg viewBox="0 0 48 48" width="44" height="44">
+              <!-- Game Controller Shadow & Body -->
+              <path d="M12 18c-4 0-7 5-7 12 0 4 3 8 7 7l4-4h16l4 4c4 1 7-3 7-7 0-7-3-12-7-12H12z" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+              <!-- D-Pad -->
+              <rect x="12" y="23" width="8" height="3" rx="1" fill="#475569"/>
+              <rect x="14.5" y="20.5" width="3" height="8" rx="1" fill="#475569"/>
+              <!-- Thumbsticks -->
+              <circle cx="19" cy="30" r="3.5" fill="#64748b"/>
+              <circle cx="29" cy="30" r="3.5" fill="#64748b"/>
+              <!-- Action Buttons -->
+              <circle cx="34" cy="22" r="1.8" fill="#ef4444"/>
+              <circle cx="31.5" cy="24.5" r="1.8" fill="#3b82f6"/>
+              <circle cx="36.5" cy="24.5" r="1.8" fill="#10b981"/>
+              <circle cx="34" cy="27" r="1.8" fill="#f59e0b"/>
+            </svg>
+          </div>
+          <span class="icon-title">Playground</span>
+          <span class="icon-sub">Side Projects</span>
+        </button>
+
+        <!-- COLUMN 1, ROW 6: Recycle Bin -->
+        <button class="desktop-icon" id="appRecycle" data-app="recycle" role="listitem" tabindex="0" aria-label="Recycle Bin">
+          <div class="icon-visual">
+            <svg viewBox="0 0 48 48" width="44" height="44">
+              <!-- Translucent Recycle Bin -->
+              <path d="M14 14h20l-2.5 24a3 3 0 0 1-3 2.5H19.5a3 3 0 0 1-3-2.5L14 14z" fill="#bae6fd" opacity="0.75" stroke="#0284c7" stroke-width="1.5"/>
+              <!-- Lid rim -->
+              <ellipse cx="24" cy="14" rx="11" ry="2.5" fill="#38bdf8" stroke="#0284c7" stroke-width="1.5"/>
+              <!-- Inner paper mesh -->
+              <path d="M19 19l4-3 5 3-2 6h-5z" fill="#ffffff" opacity="0.85"/>
+              <!-- Recycle Arrows Symbol -->
+              <path d="M22 25l2-3 2 3h-1.5v3h-1v-3H22z" fill="#0284c7"/>
+            </svg>
+          </div>
+          <span class="icon-title">Recycle Bin</span>
+          <span class="icon-sub"></span>
+        </button>
+      </div>
+
+      <!-- COLUMN 2, ROW 1: Projects -->
+      <div class="desktop-icon-col">
+        <button class="desktop-icon" id="appProjects" data-app="projects" role="listitem" tabindex="0" aria-label="Projects - My Work">
+          <div class="icon-visual">
+            <svg viewBox="0 0 48 48" width="44" height="44">
+              <!-- Back tab of folder -->
+              <path d="M8 12h12l3 3h17a2 2 0 0 1 2 2v20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V14a2 2 0 0 1 2-2z" fill="#d97706"/>
+              <!-- White paper sheets peeking out -->
+              <rect x="11" y="16" width="26" height="16" rx="1.5" fill="#ffffff" opacity="0.9"/>
+              <line x1="14" y1="20" x2="24" y2="20" stroke="#0284c7" stroke-width="1.5"/>
+              <line x1="14" y1="23" x2="33" y2="23" stroke="#94a3b8" stroke-width="1"/>
+              <!-- Front folder body -->
+              <path d="M6 18h36l-3.5 19a2 2 0 0 1-2 1.5H11.5a2 2 0 0 1-2-1.5L6 18z" fill="#f59e0b" stroke="#d97706" stroke-width="1"/>
+            </svg>
+          </div>
+          <span class="icon-title">Projects</span>
+          <span class="icon-sub">My Work</span>
+        </button>
+
+        <!-- COLUMN 2, ROW 2: Experience -->
+        <button class="desktop-icon" id="appExperience" data-app="experience" role="listitem" tabindex="0" aria-label="Experience - My Journey">
+          <div class="icon-visual">
+            <svg viewBox="0 0 48 48" width="44" height="44">
+              <!-- 3D Earth Globe -->
+              <circle cx="24" cy="24" r="16" fill="#0284c7" stroke="#0369a1" stroke-width="1"/>
+              <!-- Continents -->
+              <path d="M14 18c2-3 6-4 9-2 2 1 1 4 3 5 2 1 4-1 6 1 1 2-1 4-3 5-1 1-3 1-4 3-1 2-2 4-4 4-3 0-5-2-6-5-1-4-2-7-1-11z" fill="#22c55e"/>
+              <path d="M26 31c2 0 4 2 5 4-2 2-5 3-7 3 0-2 1-5 2-7z" fill="#22c55e"/>
+              <!-- Specular Gloss Highlight -->
+              <path d="M12 14a14 14 0 0 1 18-3c-8 1-15 8-18 16-1-4-1-9 0-13z" fill="#ffffff" opacity="0.35"/>
+              <circle cx="24" cy="24" r="16" fill="none" stroke="#38bdf8" stroke-width="0.8" opacity="0.5"/>
+            </svg>
+          </div>
+          <span class="icon-title">Experience</span>
+          <span class="icon-sub">My Journey</span>
+        </button>
+
+        <!-- COLUMN 2, ROW 3: Chess -->
+        <button class="desktop-icon" id="appChess" data-app="chess" role="listitem" tabindex="0" aria-label="Chess - Play a Game">
+          <div class="icon-visual">
+            <svg viewBox="0 0 48 48" width="44" height="44">
+              <!-- Shadow -->
+              <ellipse cx="24" cy="40" rx="11" ry="3" fill="#000" opacity="0.3"/>
+              <!-- Pedestal base -->
+              <path d="M14 38h20v3H14z" fill="#1e293b"/>
+              <path d="M16 34h16v4H16z" fill="#334155"/>
+              <!-- Chess Knight piece -->
+              <path d="M18 34c0-5 2-8 3-10-1-1-3-3-3-5 0-4 3-7 7-7 3 0 6 2 7 5 1 2 2 5 2 8 0 4-2 7-4 9H18z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+              <circle cx="23" cy="18" r="1.5" fill="#0f172a"/>
+              <path d="M21 23l4 1-3 2" fill="none" stroke="#64748b" stroke-width="1"/>
+              <!-- Knight mane ridges -->
+              <path d="M28 14c1 1 2 3 2 5M29 18c1 1 2 3 2 5" stroke="#94a3b8" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <span class="icon-title">Chess</span>
+          <span class="icon-sub">Play a Game</span>
+        </button>
+
+        <!-- COLUMN 2, ROW 4: Blog -->
+        <button class="desktop-icon" id="appBlog" data-app="blog" role="listitem" tabindex="0" aria-label="Blog - My Thoughts">
+          <div class="icon-visual">
+            <svg viewBox="0 0 48 48" width="44" height="44">
+              <!-- Notepad Paper -->
+              <rect x="10" y="8" width="24" height="32" rx="3" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+              <!-- Spiral rings at top -->
+              <circle cx="14" cy="8" r="1.5" fill="#475569"/>
+              <circle cx="19" cy="8" r="1.5" fill="#475569"/>
+              <circle cx="24" cy="8" r="1.5" fill="#475569"/>
+              <circle cx="29" cy="8" r="1.5" fill="#475569"/>
+              <!-- Ruled lines -->
+              <line x1="14" y1="16" x2="30" y2="16" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round"/>
+              <line x1="14" y1="21" x2="30" y2="21" stroke="#cbd5e1" stroke-width="1.2" stroke-linecap="round"/>
+              <line x1="14" y1="26" x2="26" y2="26" stroke="#cbd5e1" stroke-width="1.2" stroke-linecap="round"/>
+              <line x1="14" y1="31" x2="28" y2="31" stroke="#cbd5e1" stroke-width="1.2" stroke-linecap="round"/>
+              <!-- Yellow Pencil with red eraser -->
+              <g transform="translate(18, 12) rotate(35)">
+                <rect x="0" y="0" width="6" height="24" rx="1" fill="#facc15" stroke="#ca8a04" stroke-width="0.8"/>
+                <rect x="0" y="0" width="6" height="4" rx="0.5" fill="#f43f5e"/>
+                <polygon points="0,24 6,24 3,29" fill="#fed7aa"/>
+                <polygon points="2,27.5 4,27.5 3,29" fill="#1e293b"/>
+              </g>
+            </svg>
+          </div>
+          <span class="icon-title">Blog</span>
+          <span class="icon-sub">My Thoughts</span>
+        </button>
+
+        <!-- COLUMN 2, ROW 5: Contact -->
+        <button class="desktop-icon" id="appContact" data-app="contact" role="listitem" tabindex="0" aria-label="Contact - Let's Talk">
+          <div class="icon-visual">
+            <svg viewBox="0 0 48 48" width="44" height="44">
+              <!-- Mechanical Settings Gear -->
+              <circle cx="24" cy="24" r="14" fill="#64748b" stroke="#475569" stroke-width="1.5"/>
+              <path d="M22 6h4v4h-4zM22 38h4v4h-4zM6 22h4v4H6zM38 22h4v4h-4zM11 11l3 3-3 3-3-3zM34 34l3 3-3 3-3-3zM11 37l3-3-3-3-3 3zM34 14l3-3-3-3-3 3z" fill="#94a3b8"/>
+              <circle cx="24" cy="24" r="7" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+              <circle cx="24" cy="24" r="3" fill="#38bdf8"/>
+            </svg>
+          </div>
+          <span class="icon-title">Contact</span>
+          <span class="icon-sub">Let's Talk</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Drag Selection Marquee Box -->
     <div class="selection-box" id="selectionBox" hidden></div>
+
+    <!-- Active Window Containers -->
+    <div class="windows-container" id="windowsContainer"></div>
+
   </main>
 
-  <!-- Right-Click Desktop Context Menu -->
-  <nav class="win-menu context-menu" id="contextMenu" hidden aria-label="Context Menu">
-    <div class="win-menu-item has-submenu" data-action="arrange">
-      <span class="menu-icon">
-        <svg viewBox="0 0 16 16" width="16" height="16"><rect x="2" y="2" width="5" height="5" fill="#000" /><rect x="9" y="2" width="5" height="5" fill="#000" /><rect x="2" y="9" width="5" height="5" fill="#000" /><rect x="9" y="9" width="5" height="5" fill="#000" /></svg>
-      </span>
-      <span class="menu-label"><u>A</u>rrange Icons</span>
-      <span class="submenu-arrow">▶</span>
+  <!-- Modern Windows 11 Start Menu Flyout -->
+  <aside class="modern-start-menu" id="modernStartMenu" hidden aria-label="Start Menu">
+    <div class="start-search-box">
+      <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+      </svg>
+      <input type="text" id="startMenuSearch" placeholder="Type here to search..." autocomplete="off">
     </div>
-    <div class="win-menu-item" data-action="lineup">
-      <span class="menu-icon"></span>
-      <span class="menu-label">Line <u>u</u>p Icons</span>
-    </div>
-    <div class="win-menu-separator"></div>
-    <div class="win-menu-item" id="menuRefresh" data-action="refresh">
-      <span class="menu-icon">
-        <svg viewBox="0 0 16 16" width="16" height="16"><path d="M13.5 8A5.5 5.5 0 1 1 8 2.5v-2L12 3l-4 2.5V3.5a4.5 4.5 0 1 0 4.5 4.5h1z" fill="#000"/></svg>
-      </span>
-      <span class="menu-label"><u>R</u>efresh</span>
-    </div>
-    <div class="win-menu-separator"></div>
-    <div class="win-menu-item disabled">
-      <span class="menu-icon"></span>
-      <span class="menu-label"><u>P</u>aste</span>
-    </div>
-    <div class="win-menu-item disabled">
-      <span class="menu-icon"></span>
-      <span class="menu-label">Paste <u>S</u>hortcut</span>
-    </div>
-    <div class="win-menu-separator"></div>
-    <div class="win-menu-item has-submenu" data-action="new">
-      <span class="menu-icon">
-        <svg viewBox="0 0 16 16" width="16" height="16"><path d="M2 3h4l2 2h6v8H2V3z" fill="#E8B830" stroke="#000" stroke-width="0.8"/></svg>
-      </span>
-      <span class="menu-label"><u>N</u>ew</span>
-      <span class="submenu-arrow">▶</span>
-    </div>
-    <div class="win-menu-separator"></div>
-    <div class="win-menu-item" id="menuProperties" data-action="properties">
-      <span class="menu-icon">
-        <svg viewBox="0 0 16 16" width="16" height="16"><rect x="2" y="2" width="12" height="9" fill="#088" stroke="#000"/><rect x="5" y="11" width="6" height="2" fill="#888"/><rect x="3" y="13" width="10" height="1.5" fill="#444"/></svg>
-      </span>
-      <span class="menu-label">P<u>r</u>operties</span>
-    </div>
-  </nav>
 
-  <!-- Interactive Start Menu -->
-  <aside class="start-menu" id="startMenu" hidden aria-label="Start Menu">
-    <!-- Retro Vertical Banner -->
-    <div class="start-banner" aria-hidden="true">
-      <span class="banner-text"><b>Windows</b><small>98</small></span>
+    <div class="start-section-header">
+      <span>Pinned Applications</span>
     </div>
-    
-    <!-- Start Menu Item List -->
-    <div class="start-menu-items">
-      <div class="start-item" id="startPrograms" tabindex="0">
-        <span class="start-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24">
-            <path d="M2 4h7l2 2h11v14H2V4z" fill="#FFCC00" stroke="#000" stroke-width="1.2"/>
-            <rect x="5" y="9" width="14" height="2" fill="#000080"/>
-            <rect x="5" y="13" width="10" height="2" fill="#000080"/>
-          </svg>
-        </span>
-        <span class="start-label"><u>P</u>rograms</span>
-        <span class="start-arrow">▶</span>
+
+    <div class="start-pinned-grid">
+      <button class="start-app-item" data-app="computer">
+        <div class="start-app-icon">💻</div>
+        <span>About Me</span>
+      </button>
+      <button class="start-app-item" data-app="projects">
+        <div class="start-app-icon">📁</div>
+        <span>Projects</span>
+      </button>
+      <button class="start-app-item" data-app="resume">
+        <div class="start-app-icon">📄</div>
+        <span>Resume</span>
+      </button>
+      <button class="start-app-item" data-app="skills">
+        <div class="start-app-icon">⚡</div>
+        <span>Skills</span>
+      </button>
+      <button class="start-app-item" data-app="experience">
+        <div class="start-app-icon">🌐</div>
+        <span>Experience</span>
+      </button>
+      <button class="start-app-item" data-app="chess">
+        <div class="start-app-icon">♟️</div>
+        <span>Chess</span>
+      </button>
+      <button class="start-app-item" data-app="gallery">
+        <div class="start-app-icon">🖼️</div>
+        <span>Gallery</span>
+      </button>
+      <button class="start-app-item" data-app="blog">
+        <div class="start-app-icon">📝</div>
+        <span>Blog</span>
+      </button>
+      <button class="start-app-item" data-app="playground">
+        <div class="start-app-icon">🎮</div>
+        <span>Playground</span>
+      </button>
+      <button class="start-app-item" data-app="contact">
+        <div class="start-app-icon">⚙️</div>
+        <span>Contact</span>
+      </button>
+    </div>
+
+    <div class="start-footer">
+      <div class="user-profile">
+        <div class="user-avatar">👨‍💻</div>
+        <div class="user-details">
+          <span class="user-name">Developer Portfolio</span>
+          <span class="user-role">Full Stack &amp; AI Engineer</span>
+        </div>
       </div>
-
-      <div class="start-item" id="startDocuments" tabindex="0">
-        <span class="start-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24">
-            <path d="M4 3h10l6 6v12H4V3z" fill="#FFF" stroke="#000" stroke-width="1.2"/>
-            <path d="M14 3v6h6" fill="#DDD" stroke="#000" stroke-width="1.2"/>
-            <line x1="7" y1="12" x2="17" y2="12" stroke="#000080" stroke-width="1.5"/>
-            <line x1="7" y1="15" x2="15" y2="15" stroke="#000080" stroke-width="1.5"/>
-          </svg>
-        </span>
-        <span class="start-label"><u>D</u>ocuments</span>
-        <span class="start-arrow">▶</span>
-      </div>
-
-      <div class="start-item" id="startSettings" tabindex="0">
-        <span class="start-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24">
-            <circle cx="12" cy="12" r="5" fill="#808080" stroke="#000" stroke-width="1.2"/>
-            <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2" stroke="#000" stroke-width="2"/>
-          </svg>
-        </span>
-        <span class="start-label"><u>S</u>ettings</span>
-        <span class="start-arrow">▶</span>
-      </div>
-
-      <div class="start-item" id="startFind" tabindex="0">
-        <span class="start-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24">
-            <circle cx="10" cy="10" r="6" fill="#FFF" stroke="#000" stroke-width="1.5"/>
-            <line x1="14.5" y1="14.5" x2="21" y2="21" stroke="#000" stroke-width="2.5"/>
-            <circle cx="9" cy="9" r="2" fill="#88D"/>
-          </svg>
-        </span>
-        <span class="start-label"><u>F</u>ind</span>
-        <span class="start-arrow">▶</span>
-      </div>
-
-      <div class="start-item" id="startHelp" tabindex="0">
-        <span class="start-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24">
-            <path d="M4 3h16v18H4V3z" fill="#800080" stroke="#000" stroke-width="1.2"/>
-            <text x="12" y="16" fill="#FFF" font-family="'MS Sans Serif', sans-serif" font-weight="bold" font-size="14" text-anchor="middle">?</text>
-          </svg>
-        </span>
-        <span class="start-label"><u>H</u>elp</span>
-      </div>
-
-      <div class="start-item" id="startRun" tabindex="0">
-        <span class="start-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24">
-            <rect x="3" y="5" width="18" height="14" fill="#FFF" stroke="#000" stroke-width="1.2"/>
-            <path d="M6 14l4-4-4-4" fill="none" stroke="#000" stroke-width="2"/>
-            <line x1="12" y1="14" x2="17" y2="14" stroke="#000" stroke-width="2"/>
-          </svg>
-        </span>
-        <span class="start-label"><u>R</u>un...</span>
-      </div>
-
-      <div class="win-menu-separator"></div>
-
-      <div class="start-item" id="startShutdown" tabindex="0">
-        <span class="start-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24">
-            <circle cx="12" cy="12" r="8" fill="none" stroke="#CC0000" stroke-width="2"/>
-            <line x1="12" y1="4" x2="12" y2="12" stroke="#CC0000" stroke-width="2.5"/>
-          </svg>
-        </span>
-        <span class="start-label">Sh<u>u</u>t Down...</span>
-      </div>
+      <button class="power-btn" id="startPowerBtn" title="Power Options" aria-label="Power">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18.36 6.64a9 9 0 1 1-12.73 0M12 2v10" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
   </aside>
 
-  <!-- Volume Slider Dialog Popup -->
-  <section class="win-dialog volume-popup" id="volumePopup" hidden aria-label="Volume Control">
-    <header class="win-titlebar">
-      <span class="win-title">Volume</span>
-      <button class="win-close-btn" id="volumeCloseBtn" aria-label="Close">✕</button>
-    </header>
-    <div class="volume-body">
-      <div class="volume-slider-col">
-        <label for="volRange">Volume</label>
-        <div class="slider-track-wrap">
-          <span class="slider-tick-max">-</span>
-          <input type="range" id="volRange" min="0" max="100" value="80" orient="vertical">
-          <span class="slider-tick-min">-</span>
-        </div>
-        <div class="mute-checkbox-wrap">
-          <input type="checkbox" id="volMute">
-          <label for="volMute"><u>M</u>ute</label>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Date / Time Calendar Dialog Popup -->
-  <section class="win-dialog datetime-popup" id="datetimePopup" hidden aria-label="Date and Time Properties">
-    <header class="win-titlebar">
-      <span class="win-title">Date/Time Properties</span>
-      <button class="win-close-btn" id="datetimeCloseBtn" aria-label="Close">✕</button>
-    </header>
-    <div class="datetime-body">
-      <div class="datetime-tabs">
-        <div class="tab-button active">Date &amp; Time</div>
-        <div class="tab-button">Time Zone</div>
-      </div>
-      <div class="datetime-content">
-        <div class="calendar-preview" id="calendarGrid">
-          <div class="calendar-header" id="calendarMonthYear">October 2026</div>
-          <div class="calendar-days-row">
-            <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
-          </div>
-          <div class="calendar-cells" id="calendarDays"></div>
-        </div>
-        <div class="clock-preview">
-          <div class="analog-clock" id="analogClock">
-            <div class="clock-face">
-              <div class="clock-hand hand-hour" id="handHour"></div>
-              <div class="clock-hand hand-minute" id="handMinute"></div>
-              <div class="clock-hand hand-second" id="handSecond"></div>
-              <div class="clock-pin"></div>
-            </div>
-          </div>
-          <div class="digital-clock-readout" id="popupDigitalTime">10:24:00 PM</div>
-        </div>
-      </div>
-      <div class="dialog-button-row">
-        <button class="win-button" id="datetimeOkBtn">OK</button>
-        <button class="win-button" id="datetimeCancelBtn">Cancel</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Display Properties Dialog Popup (Wallpaper info) -->
-  <section class="win-dialog properties-popup" id="propertiesPopup" hidden aria-label="Display Properties">
-    <header class="win-titlebar">
-      <span class="win-title">Display Properties</span>
-      <button class="win-close-btn" id="propertiesCloseBtn" aria-label="Close">✕</button>
-    </header>
-    <div class="properties-body">
-      <div class="datetime-tabs">
-        <div class="tab-button active">Background</div>
-        <div class="tab-button">Screen Saver</div>
-        <div class="tab-button">Appearance</div>
-        <div class="tab-button">Settings</div>
-      </div>
-      <div class="properties-content">
-        <div class="monitor-preview-container">
-          <div class="crt-monitor-case">
-            <div class="crt-screen">
-              <div class="crt-screen-img" id="crtScreenImg"></div>
-            </div>
-          </div>
-        </div>
-        <div class="wallpaper-selector-box">
-          <label>Select a background wallpaper:</label>
-          <div class="wallpaper-list" id="wallpaperList">
-            <div class="wallpaper-item selected" data-bg="assets/wallpaper.jpg">Classic Scenery (Active)</div>
-            <div class="wallpaper-item" data-bg="assets/wallpaper_ghibli.jpg">Ghibli Horizon</div>
-          </div>
-        </div>
-      </div>
-      <div class="dialog-button-row">
-        <button class="win-button" id="propsOkBtn">OK</button>
-        <button class="win-button" id="propsCancelBtn">Cancel</button>
-        <button class="win-button" id="propsApplyBtn">Apply</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Retro Shut Down Dialog Modal -->
-  <dialog class="win-dialog shutdown-modal" id="shutdownModal" aria-label="Shut Down Windows">
-    <header class="win-titlebar">
-      <span class="win-title">Shut Down Windows</span>
-      <button class="win-close-btn" id="shutdownCloseBtn" aria-label="Close">✕</button>
-    </header>
-    <div class="shutdown-body">
-      <div class="shutdown-icon-wrap">
-        <svg viewBox="0 0 32 32" width="32" height="32">
-          <rect x="2" y="4" width="28" height="20" rx="2" fill="#C0C0C0" stroke="#000" stroke-width="1.5"/>
-          <rect x="5" y="7" width="22" height="14" fill="#000080"/>
-          <rect x="12" y="24" width="8" height="4" fill="#808080" stroke="#000"/>
-          <rect x="8" y="27" width="16" height="2" fill="#808080" stroke="#000"/>
-        </svg>
-      </div>
-      <div class="shutdown-options">
-        <p class="shutdown-prompt">What do you want the computer to do?</p>
-        <div class="radio-option">
-          <input type="radio" id="shutRadio1" name="shutdownChoice" value="shutdown" checked>
-          <label for="shutRadio1"><u>S</u>hut down</label>
-        </div>
-        <div class="radio-option">
-          <input type="radio" id="shutRadio2" name="shutdownChoice" value="restart">
-          <label for="shutRadio2"><u>R</u>estart</label>
-        </div>
-        <div class="radio-option">
-          <input type="radio" id="shutRadio3" name="shutdownChoice" value="standby">
-          <label for="shutRadio3">Stand <u>b</u>y</label>
-        </div>
-      </div>
-    </div>
-    <div class="dialog-button-row">
-      <button class="win-button" id="shutdownConfirmBtn">OK</button>
-      <button class="win-button" id="shutdownCancelBtn">Cancel</button>
-      <button class="win-button" id="shutdownHelpBtn"><u>H</u>elp</button>
-    </div>
-  </dialog>
-
-  <!-- The Authentic Retro Taskbar (Always Fixed Bottom) -->
-  <footer class="taskbar" id="taskbar" role="navigation" aria-label="Windows Taskbar">
+  <!-- Modern Windows 11 Glassmorphism Taskbar (Fixed Bottom) -->
+  <footer class="modern-taskbar" id="modernTaskbar" role="navigation" aria-label="Taskbar">
     
-    <!-- Left Section: Start Button -->
-    <div class="taskbar-left">
-      <button class="start-btn" id="startBtn" aria-label="Start Button" aria-expanded="false" aria-controls="startMenu">
-        <!-- Iconic Windows 95 4-Color Flying Flag Logo -->
-        <span class="win-flag-icon" aria-hidden="true">
-          <svg viewBox="0 0 16 16" width="16" height="16">
-            <!-- Trailing black pixel shadow -->
-            <path d="M3 2.5 L8 1.5 L8 7.5 L3 8.5 Z" fill="#000" opacity="0.3" transform="translate(1, 1)"/>
-            <path d="M8 1.5 L14 1 L14 7 L8 7.5 Z" fill="#000" opacity="0.3" transform="translate(1, 1)"/>
-            <path d="M3 8.5 L8 7.5 L8 13.5 L3 14.5 Z" fill="#000" opacity="0.3" transform="translate(1, 1)"/>
-            <path d="M8 7.5 L14 7 L14 13 L8 13.5 Z" fill="#000" opacity="0.3" transform="translate(1, 1)"/>
-            <!-- 4 Distinct Windows Colors -->
-            <!-- Top Left: Red -->
-            <path d="M2.5 2.2 C 4.5 1.8, 6.2 2.6, 7.8 1.8 L 7.8 7.2 C 6.2 8.0, 4.5 7.2, 2.5 7.6 Z" fill="#E81123"/>
-            <!-- Top Right: Green -->
-            <path d="M8.2 1.8 C 9.8 1.2, 11.8 1.5, 13.8 1.0 L 13.8 6.5 C 11.8 7.0, 9.8 6.7, 8.2 7.2 Z" fill="#00B050"/>
-            <!-- Bottom Left: Blue -->
-            <path d="M2.5 8.1 C 4.5 7.7, 6.2 8.5, 7.8 7.7 L 7.8 13.1 C 6.2 13.9, 4.5 13.1, 2.5 13.5 Z" fill="#0078D7"/>
-            <!-- Bottom Right: Yellow -->
-            <path d="M8.2 7.7 C 9.8 7.1, 11.8 7.4, 13.8 6.9 L 13.8 12.4 C 11.8 12.9, 9.8 12.6, 8.2 13.1 Z" fill="#FFC000"/>
-          </svg>
-        </span>
-        <span class="start-text">Start</span>
-      </button>
-
-      <!-- Taskbar Etched Divider -->
-      <div class="taskbar-divider" aria-hidden="true"></div>
-    </div>
-
-    <!-- Center Section: Running Tasks Container (prepared for apps when requested) -->
-    <div class="taskbar-tasks" id="taskbarTasks" role="tablist" aria-label="Running Applications">
-      <!-- Task buttons will be dynamically inserted here when apps launch -->
-    </div>
-
-    <!-- Right Section: System Tray / Notification Area -->
-    <div class="taskbar-tray" id="systemTray" role="region" aria-label="System Tray">
+    <!-- Left Section: Windows 11 Start + Search + Pinned Apps -->
+    <div class="taskbar-left-group">
       
-      <!-- Caret / Chevron Icon (^) -->
-      <button class="tray-icon-btn tray-expand" id="trayChevronBtn" title="Hidden icons" aria-label="Hidden icons">
-        <svg viewBox="0 0 10 10" width="10" height="10">
-          <polyline points="2,6 5,3 8,6" fill="none" stroke="#000" stroke-width="1.6" stroke-linecap="square"/>
+      <!-- Windows 11 Start Button -->
+      <button class="win11-start-btn" id="win11StartBtn" aria-label="Start Menu" aria-expanded="false" title="Start">
+        <div class="win11-logo">
+          <span class="win11-tile"></span>
+          <span class="win11-tile"></span>
+          <span class="win11-tile"></span>
+          <span class="win11-tile"></span>
+        </div>
+      </button>
+
+      <!-- Windows 11 Pill Search Bar -->
+      <div class="win11-search-bar" id="win11SearchBar">
+        <svg viewBox="0 0 20 20" width="15" height="15" fill="#94a3b8">
+          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+        </svg>
+        <input type="text" id="taskbarSearchInput" placeholder="Search" aria-label="Search apps and files">
+      </div>
+
+      <!-- Pinned Taskbar Apps (from screenshot: Explorer, Edge, Terminal, Spotify, Settings) -->
+      <div class="taskbar-pinned-apps">
+        
+        <!-- Pinned 1: File Explorer (Projects) -->
+        <button class="taskbar-app-btn" data-app="projects" title="File Explorer — Projects" aria-label="Projects">
+          <svg viewBox="0 0 24 24" width="22" height="22">
+            <path d="M3 6h7l2 2h9a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z" fill="#eab308"/>
+            <path d="M2 10h20l-1.5 9a1 1 0 0 1-1 1H4.5a1 1 0 0 1-1-1L2 10z" fill="#facc15"/>
+            <rect x="8" y="11" width="8" height="4" rx="1" fill="#0284c7" opacity="0.8"/>
+          </svg>
+        </button>
+
+        <!-- Pinned 2: Edge Browser (Gallery / Web) -->
+        <button class="taskbar-app-btn" data-app="gallery" title="Browser — Showcase" aria-label="Browser">
+          <svg viewBox="0 0 24 24" width="22" height="22">
+            <circle cx="12" cy="12" r="10" fill="#0ea5e9"/>
+            <path d="M4 12c3-4 8-4 12-1 3 2 4 6 2 9-2-3-6-5-10-4-2 0-3-2-4-4z" fill="#38bdf8"/>
+            <path d="M12 4c4 3 6 8 4 12-2 3-5 5-9 4 2-1 4-4 4-7 0-3-1-6-3-8 1-.5 2.5-1 4-1z" fill="#22c55e" opacity="0.9"/>
+          </svg>
+        </button>
+
+        <!-- Pinned 3: Terminal (Skills) -->
+        <button class="taskbar-app-btn" data-app="skills" title="Terminal — Tech Stack" aria-label="Terminal">
+          <svg viewBox="0 0 24 24" width="22" height="22">
+            <rect x="2" y="4" width="20" height="16" rx="3" fill="#0f172a" stroke="#475569" stroke-width="1.2"/>
+            <path d="M6 9l4 3-4 3" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="12" y1="15" x2="17" y2="15" stroke="#10b981" stroke-width="2"/>
+          </svg>
+        </button>
+
+        <!-- Pinned 4: Spotify (Lofi ambient player) -->
+        <button class="taskbar-app-btn" id="taskbarSpotifyBtn" data-app="spotify" title="Spotify — Music" aria-label="Spotify Music Player">
+          <svg viewBox="0 0 24 24" width="22" height="22">
+            <circle cx="12" cy="12" r="10" fill="#1db954"/>
+            <path d="M7 9.5c3.5-1 7.5-.5 10 1" fill="none" stroke="#000000" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M7.5 12.5c3-.8 6.5-.4 9 .8" fill="none" stroke="#000000" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M8 15.5c2.5-.6 5.5-.3 7.5.6" fill="none" stroke="#000000" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <!-- Pinned 5: Settings (Contact & Preferences) -->
+        <button class="taskbar-app-btn" data-app="contact" title="Settings — Contact &amp; Options" aria-label="Settings">
+          <svg viewBox="0 0 24 24" width="22" height="22">
+            <circle cx="12" cy="12" r="8" fill="#64748b"/>
+            <circle cx="12" cy="12" r="3.5" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5" stroke="#94a3b8" stroke-width="2"/>
+          </svg>
+        </button>
+
+      </div>
+
+      <!-- Active Running Window Tabs Container -->
+      <div class="taskbar-active-tabs" id="taskbarActiveTabs"></div>
+
+    </div>
+
+    <!-- Right Section: Modern System Tray -->
+    <div class="taskbar-right-tray" id="modernSystemTray" role="region" aria-label="System Tray">
+      
+      <!-- Caret / Hidden Icons -->
+      <button class="tray-btn" id="trayModernChevron" title="Show hidden icons" aria-label="Hidden icons">
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 10l4-4 4 4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
 
-      <!-- Speaker / Volume Icon -->
-      <button class="tray-icon-btn tray-volume" id="trayVolumeBtn" title="Volume: 80%" aria-label="Volume Control">
-        <svg viewBox="0 0 16 16" width="16" height="16">
-          <!-- Retro Windows Speaker -->
-          <path d="M2 5h3l4-4v14l-4-4H2V5z" fill="#000"/>
-          <!-- Soundwaves -->
-          <path d="M11 5c1 1.5 1 4.5 0 6" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M13 3c2.2 2.5 2.2 7.5 0 10" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Network / Wi-Fi Icon -->
+      <button class="tray-btn" id="trayWifiBtn" title="Wi-Fi: Connected (Internet Access)" aria-label="Network">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M12 18a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/>
+          <path d="M7.76 15.66a6 6 0 0 1 8.48 0 .75.75 0 0 0 1.06-1.06 7.5 7.5 0 0 0-10.6 0 .75.75 0 0 0 1.06 1.06z"/>
+          <path d="M4.93 12.83a10 10 0 0 1 14.14 0 .75.75 0 0 0 1.06-1.06 11.5 11.5 0 0 0-16.26 0 .75.75 0 1 0 1.06 1.06z"/>
         </svg>
       </button>
 
-      <!-- CRT Computer Monitor Network / Display Icon -->
-      <button class="tray-icon-btn tray-monitor" id="trayMonitorBtn" title="System Status: Connected &amp; Online" aria-label="System Status">
-        <svg viewBox="0 0 16 16" width="16" height="16">
-          <rect x="2" y="2" width="12" height="9" rx="1" fill="#C0C0C0" stroke="#000" stroke-width="1.2"/>
-          <rect x="4" y="3.5" width="8" height="6" fill="#008080"/>
-          <!-- Screen glow / scanline -->
-          <rect x="5" y="4.5" width="6" height="1" fill="#20B2AA" opacity="0.8"/>
-          <rect x="6.5" y="11" width="3" height="2" fill="#808080" stroke="#000" stroke-width="0.8"/>
-          <line x1="4" y1="13.5" x2="12" y2="13.5" stroke="#000" stroke-width="1.2"/>
+      <!-- Volume Icon -->
+      <button class="tray-btn" id="trayModernVolumeBtn" title="Speakers: 80%" aria-label="Volume">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M13.5 4.06c0-1.33-1.61-2-2.56-1.06L6.88 7.06H4a2 2 0 0 0-2 2v5.88a2 2 0 0 0 2 2h2.88l4.06 4.06c.95.95 2.56.28 2.56-1.06V4.06zM17.5 12c0-2.07-1.19-3.86-2.92-4.72a1 1 0 1 0-.9 1.79c1.08.54 1.82 1.66 1.82 2.93s-.74 2.39-1.82 2.93a1 1 0 1 0 .9 1.79C16.31 15.86 17.5 14.07 17.5 12zm2.5 0c0 3.42-1.97 6.38-4.83 7.8a1 1 0 1 0 .9 1.79C19.54 19.86 22 16.22 22 12s-2.46-7.86-5.93-9.59a1 1 0 1 0-.9 1.79C18.03 5.62 20 8.58 20 12z"/>
         </svg>
       </button>
 
-      <!-- Exact Two-Line Digital Time & Date matching the screenshot -->
-      <div class="tray-clock" id="trayClock" role="timer" aria-live="off" title="Double click to open Date/Time Properties">
-        <span class="clock-time" id="clockTime">10:24 PM</span>
-        <span class="clock-date" id="clockDate">26 Oct 2026</span>
+      <!-- Battery Icon -->
+      <button class="tray-btn" id="trayBatteryBtn" title="Battery: 100% Fully Charged" aria-label="Battery">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="2" y="7" width="17" height="10" rx="2.5"/>
+          <path d="M21 10.5v3" stroke-linecap="round"/>
+          <rect x="4.5" y="9.5" width="12" height="5" rx="1" fill="#22c55e" stroke="none"/>
+        </svg>
+      </button>
+
+      <!-- Modern Two-Line Digital Time & Date -->
+      <div class="modern-tray-clock" id="modernTrayClock" role="timer" title="Open Calendar &amp; Notification Center">
+        <span class="modern-clock-time" id="modernClockTime">10:24 PM</span>
+        <span class="modern-clock-date" id="modernClockDate">26 Oct 2026</span>
       </div>
 
     </div>
 
   </footer>
+
+  <!-- Right-Click Desktop Context Menu -->
+  <nav class="modern-context-menu" id="modernContextMenu" hidden aria-label="Context Menu">
+    <div class="menu-item" data-action="refresh">
+      <span>🔄 Refresh</span>
+    </div>
+    <div class="menu-divider"></div>
+    <div class="menu-item" data-action="open-all">
+      <span>📂 Open All Work</span>
+    </div>
+    <div class="menu-item" data-action="switch-wallpaper">
+      <span>🌄 Toggle Wallpaper</span>
+    </div>
+    <div class="menu-divider"></div>
+    <div class="menu-item" data-action="properties">
+      <span>⚙️ Display Properties</span>
+    </div>
+  </nav>
 
   <script src="js/main.js"></script>
 </body>
