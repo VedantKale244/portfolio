@@ -1,0 +1,858 @@
+/* ==========================================================================
+   Desktop Portfolio — Authentic Windows 95/98 Retro Operating System Theme
+   ========================================================================== */
+
+:root {
+  --win-gray: #c0c0c0;
+  --win-gray-light: #dfdfdf;
+  --win-gray-dark: #808080;
+  --win-gray-darker: #404040;
+  --win-white: #ffffff;
+  --win-black: #000000;
+  --win-navy: #000080;
+  --win-cyan: #1084d0;
+  --win-selection-bg: rgba(0, 85, 230, 0.25);
+  --win-selection-border: #0055e6;
+  --font-retro: 'MS Sans Serif', Tahoma, 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  --taskbar-height: 32px;
+}
+
+/* Base Reset & Lock */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: var(--font-retro);
+  font-size: 11px;
+  color: var(--win-black);
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+  image-rendering: pixelated;
+}
+
+/* ==========================================================================
+   Desktop Screen & Wallpaper Canvas
+   ========================================================================== */
+
+.desktop-screen {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #008080; /* Classic Windows Teal fallback */
+  background-image: url('../assets/wallpaper.jpg');
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+}
+
+.desktop-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: var(--taskbar-height);
+  overflow: hidden;
+  z-index: 10;
+}
+
+/* Selection Marquee Box */
+.selection-box {
+  position: absolute;
+  background: var(--win-selection-bg);
+  border: 1px dotted var(--win-selection-border);
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* ==========================================================================
+   Taskbar (Fixed at Bottom)
+   ========================================================================== */
+
+.taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--taskbar-height);
+  background: var(--win-gray);
+  border-top: 2px solid var(--win-white);
+  box-shadow: inset 0 1px 0 var(--win-gray-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 4px;
+  z-index: 10000;
+}
+
+.taskbar-left {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* Start Button */
+.start-btn {
+  height: 24px;
+  padding: 2px 6px;
+  background: var(--win-gray);
+  border-top: 2px solid var(--win-white);
+  border-left: 2px solid var(--win-white);
+  border-right: 2px solid var(--win-black);
+  border-bottom: 2px solid var(--win-black);
+  box-shadow: inset 1px 1px 0 var(--win-gray-light), inset -1px -1px 0 var(--win-gray-dark);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-retro);
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--win-black);
+  cursor: pointer;
+  outline: none;
+  transition: none;
+}
+
+.start-btn:active,
+.start-btn.active {
+  border-top: 2px solid var(--win-black);
+  border-left: 2px solid var(--win-black);
+  border-right: 2px solid var(--win-white);
+  border-bottom: 2px solid var(--win-white);
+  box-shadow: inset 1px 1px 0 var(--win-gray-dark);
+  background: var(--win-gray-light);
+  padding: 3px 5px 1px 7px; /* Shift content 1px down-right */
+}
+
+.start-btn:focus-visible {
+  outline: 1px dotted var(--win-black);
+  outline-offset: -3px;
+}
+
+.win-flag-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+.start-text {
+  letter-spacing: 0.3px;
+  line-height: 1;
+}
+
+.taskbar-divider {
+  width: 2px;
+  height: 20px;
+  border-left: 1px solid var(--win-gray-dark);
+  border-right: 1px solid var(--win-white);
+  margin: 0 6px 0 6px;
+}
+
+/* Running Tasks Container */
+.taskbar-tasks {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+  padding: 0 4px;
+  overflow-x: auto;
+}
+
+/* System Tray / Notification Area */
+.taskbar-tray {
+  height: 24px;
+  background: var(--win-gray);
+  border-top: 1px solid var(--win-gray-dark);
+  border-left: 1px solid var(--win-gray-dark);
+  border-right: 1px solid var(--win-white);
+  border-bottom: 1px solid var(--win-white);
+  box-shadow: inset 1px 1px 0 var(--win-gray-darker);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 1px 6px;
+  margin-left: 4px;
+}
+
+.tray-icon-btn {
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 2px;
+  cursor: pointer;
+  outline: none;
+  border-radius: 0;
+}
+
+.tray-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.tray-icon-btn:active {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.tray-expand {
+  font-size: 10px;
+  font-weight: bold;
+  padding: 0 1px;
+}
+
+/* Two-Line Clock & Date */
+.tray-clock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  font-family: var(--font-retro);
+  font-size: 9.5px;
+  line-height: 1.1;
+  padding-left: 2px;
+  cursor: pointer;
+}
+
+.tray-clock:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.clock-time {
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.clock-date {
+  font-size: 9px;
+  color: #222;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Start Menu (Authentic Windows 98)
+   ========================================================================== */
+
+.start-menu {
+  position: fixed;
+  bottom: calc(var(--taskbar-height) + 1px);
+  left: 2px;
+  background: var(--win-gray);
+  border-top: 2px solid var(--win-white);
+  border-left: 2px solid var(--win-white);
+  border-right: 2px solid var(--win-black);
+  border-bottom: 2px solid var(--win-black);
+  box-shadow: inset 1px 1px 0 var(--win-gray-light), inset -1px -1px 0 var(--win-gray-dark), 3px 3px 10px rgba(0, 0, 0, 0.4);
+  display: flex;
+  z-index: 10001;
+  min-width: 175px;
+  animation: startMenuIn 0.08s ease-out;
+}
+
+@keyframes startMenuIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.start-banner {
+  background: linear-gradient(180deg, var(--win-cyan) 0%, var(--win-navy) 100%);
+  width: 28px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 8px;
+  border-right: 1px solid var(--win-black);
+}
+
+.banner-text {
+  color: var(--win-white);
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  text-shadow: 1px 1px 2px #000;
+}
+
+.banner-text small {
+  font-size: 11px;
+  margin-left: 3px;
+  font-weight: bold;
+}
+
+.start-menu-items {
+  flex: 1;
+  padding: 3px 2px;
+  display: flex;
+  flex-direction: column;
+}
+
+.start-item {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px 4px 6px;
+  cursor: pointer;
+  gap: 8px;
+  font-size: 11px;
+  outline: none;
+}
+
+.start-item:hover,
+.start-item:focus {
+  background: var(--win-navy);
+  color: var(--win-white);
+}
+
+.start-item:hover svg line,
+.start-item:focus svg line,
+.start-item:hover svg path[stroke="#000080"],
+.start-item:focus svg path[stroke="#000080"] {
+  stroke: var(--win-white);
+}
+
+.start-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.start-label {
+  flex: 1;
+}
+
+.start-arrow {
+  font-size: 8px;
+  margin-left: auto;
+}
+
+/* ==========================================================================
+   Windows Menus & Context Menu
+   ========================================================================== */
+
+.win-menu {
+  position: absolute;
+  background: var(--win-gray);
+  border-top: 2px solid var(--win-white);
+  border-left: 2px solid var(--win-white);
+  border-right: 2px solid var(--win-black);
+  border-bottom: 2px solid var(--win-black);
+  box-shadow: inset 1px 1px 0 var(--win-gray-light), inset -1px -1px 0 var(--win-gray-dark), 2px 2px 6px rgba(0, 0, 0, 0.4);
+  padding: 2px;
+  z-index: 10005;
+  min-width: 145px;
+}
+
+.win-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 3px 14px 3px 6px;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.win-menu-item:hover:not(.disabled) {
+  background: var(--win-navy);
+  color: var(--win-white);
+}
+
+.win-menu-item:hover:not(.disabled) svg path {
+  fill: var(--win-white);
+}
+
+.win-menu-item.disabled {
+  color: var(--win-gray-dark);
+  text-shadow: 1px 1px 0 var(--win-white);
+  cursor: default;
+}
+
+.win-menu-item .menu-icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.win-menu-item .menu-label {
+  flex: 1;
+}
+
+.win-menu-item .submenu-arrow {
+  font-size: 8px;
+}
+
+.win-menu-separator {
+  height: 1px;
+  border-top: 1px solid var(--win-gray-dark);
+  border-bottom: 1px solid var(--win-white);
+  margin: 3px 2px;
+}
+
+/* ==========================================================================
+   Windows Dialog & Window Styling
+   ========================================================================== */
+
+.win-dialog {
+  position: fixed;
+  background: var(--win-gray);
+  border-top: 2px solid var(--win-white);
+  border-left: 2px solid var(--win-white);
+  border-right: 2px solid var(--win-black);
+  border-bottom: 2px solid var(--win-black);
+  box-shadow: inset 1px 1px 0 var(--win-gray-light), inset -1px -1px 0 var(--win-gray-dark), 3px 3px 12px rgba(0, 0, 0, 0.5);
+  z-index: 10002;
+  font-family: var(--font-retro);
+}
+
+.win-titlebar {
+  background: linear-gradient(90deg, var(--win-navy) 0%, var(--win-cyan) 100%);
+  color: var(--win-white);
+  font-weight: bold;
+  font-size: 11px;
+  padding: 3px 4px 3px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: move;
+}
+
+.win-title {
+  letter-spacing: 0.3px;
+}
+
+.win-close-btn {
+  width: 16px;
+  height: 14px;
+  background: var(--win-gray);
+  border-top: 1px solid var(--win-white);
+  border-left: 1px solid var(--win-white);
+  border-right: 1px solid var(--win-black);
+  border-bottom: 1px solid var(--win-black);
+  box-shadow: inset 1px 1px 0 var(--win-gray-light), inset -1px -1px 0 var(--win-gray-dark);
+  font-size: 9px;
+  font-weight: bold;
+  color: var(--win-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+}
+
+.win-close-btn:active {
+  border-top: 1px solid var(--win-black);
+  border-left: 1px solid var(--win-black);
+  border-right: 1px solid var(--win-white);
+  border-bottom: 1px solid var(--win-white);
+  box-shadow: inset 1px 1px 0 var(--win-gray-dark);
+}
+
+.win-button {
+  background: var(--win-gray);
+  border-top: 2px solid var(--win-white);
+  border-left: 2px solid var(--win-white);
+  border-right: 2px solid var(--win-black);
+  border-bottom: 2px solid var(--win-black);
+  box-shadow: inset 1px 1px 0 var(--win-gray-light), inset -1px -1px 0 var(--win-gray-dark);
+  padding: 4px 14px;
+  min-width: 68px;
+  font-family: var(--font-retro);
+  font-size: 11px;
+  cursor: pointer;
+  outline: none;
+}
+
+.win-button:active {
+  border-top: 2px solid var(--win-black);
+  border-left: 2px solid var(--win-black);
+  border-right: 2px solid var(--win-white);
+  border-bottom: 2px solid var(--win-white);
+  box-shadow: inset 1px 1px 0 var(--win-gray-dark);
+  padding: 5px 13px 3px 15px;
+}
+
+.win-button:focus-visible {
+  outline: 1px dotted var(--win-black);
+  outline-offset: -4px;
+}
+
+.dialog-button-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+/* ==========================================================================
+   Volume Control Popup
+   ========================================================================== */
+
+.volume-popup {
+  bottom: calc(var(--taskbar-height) + 4px);
+  right: 60px;
+  width: 90px;
+}
+
+.volume-body {
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.volume-slider-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.slider-track-wrap {
+  display: flex;
+  align-items: center;
+  height: 90px;
+  gap: 4px;
+}
+
+.slider-track-wrap input[type="range"] {
+  writing-mode: bt-lr; /* IE/Edge */
+  -webkit-appearance: slider-vertical; /* WebKit */
+  appearance: slider-vertical;
+  width: 16px;
+  height: 80px;
+  cursor: pointer;
+}
+
+.slider-tick-max, .slider-tick-min {
+  font-size: 9px;
+  color: var(--win-gray-darker);
+}
+
+.mute-checkbox-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+/* ==========================================================================
+   Date / Time Properties Popup
+   ========================================================================== */
+
+.datetime-popup {
+  bottom: calc(var(--taskbar-height) + 6px);
+  right: 8px;
+  width: 320px;
+}
+
+.datetime-body {
+  padding: 8px;
+}
+
+.datetime-tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--win-gray-dark);
+}
+
+.tab-button {
+  padding: 4px 8px;
+  background: var(--win-gray);
+  border-top: 2px solid var(--win-white);
+  border-left: 2px solid var(--win-white);
+  border-right: 2px solid var(--win-black);
+  border-bottom: none;
+  cursor: pointer;
+  margin-bottom: -1px;
+}
+
+.tab-button.active {
+  background: var(--win-gray);
+  border-bottom: 2px solid var(--win-gray);
+  font-weight: bold;
+}
+
+.datetime-content {
+  border: 2px groove var(--win-white);
+  padding: 10px;
+  display: flex;
+  gap: 12px;
+}
+
+.calendar-preview {
+  flex: 1;
+  border: 1px inset var(--win-white);
+  background: var(--win-white);
+  padding: 4px;
+}
+
+.calendar-header {
+  text-align: center;
+  font-weight: bold;
+  background: var(--win-navy);
+  color: var(--win-white);
+  padding: 2px;
+  margin-bottom: 4px;
+}
+
+.calendar-days-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: bold;
+  font-size: 9px;
+  color: var(--win-gray-dark);
+}
+
+.calendar-cells {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 9px;
+  gap: 1px;
+}
+
+.calendar-cells span {
+  padding: 2px 0;
+  cursor: pointer;
+}
+
+.calendar-cells span.today {
+  background: var(--win-navy);
+  color: var(--win-white);
+  border: 1px dotted var(--win-white);
+}
+
+.clock-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.analog-clock {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  border: 2px inset var(--win-white);
+  background: var(--win-white);
+  position: relative;
+}
+
+.clock-face {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.clock-pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: var(--win-black);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.clock-hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+  background: var(--win-black);
+}
+
+.hand-hour {
+  width: 2.5px;
+  height: 20px;
+  margin-left: -1.25px;
+}
+
+.hand-minute {
+  width: 1.5px;
+  height: 28px;
+  margin-left: -0.75px;
+}
+
+.hand-second {
+  width: 1px;
+  height: 32px;
+  margin-left: -0.5px;
+  background: #cc0000;
+}
+
+.digital-clock-readout {
+  font-weight: bold;
+  font-size: 11px;
+  border: 1px inset var(--win-white);
+  padding: 2px 6px;
+  background: var(--win-white);
+}
+
+/* ==========================================================================
+   Display Properties (Monitor Graphic)
+   ========================================================================== */
+
+.properties-popup {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 360px;
+}
+
+.properties-body {
+  padding: 8px;
+}
+
+.properties-content {
+  border: 2px groove var(--win-white);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.monitor-preview-container {
+  display: flex;
+  justify-content: center;
+}
+
+.crt-monitor-case {
+  width: 130px;
+  height: 95px;
+  background: #d4d0c8;
+  border: 3px outset var(--win-white);
+  border-radius: 6px;
+  padding: 8px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.crt-screen {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  border: 2px inset var(--win-gray-darker);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.crt-screen-img {
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/wallpaper.jpg');
+  background-size: cover;
+  background-position: center bottom;
+}
+
+.wallpaper-selector-box {
+  width: 100%;
+}
+
+.wallpaper-selector-box label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.wallpaper-list {
+  background: var(--win-white);
+  border: 2px inset var(--win-white);
+  height: 60px;
+  overflow-y: auto;
+}
+
+.wallpaper-item {
+  padding: 3px 6px;
+  cursor: pointer;
+}
+
+.wallpaper-item.selected,
+.wallpaper-item:hover {
+  background: var(--win-navy);
+  color: var(--win-white);
+}
+
+/* ==========================================================================
+   Shut Down Windows Dialog
+   ========================================================================== */
+
+.shutdown-modal {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 310px;
+  border: 2px outset var(--win-white);
+  background: var(--win-gray);
+  box-shadow: 3px 3px 14px rgba(0, 0, 0, 0.6);
+}
+
+.shutdown-modal::backdrop {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.shutdown-body {
+  padding: 14px 12px;
+  display: flex;
+  gap: 14px;
+}
+
+.shutdown-icon-wrap {
+  flex-shrink: 0;
+}
+
+.shutdown-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.shutdown-prompt {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+
+@media (max-width: 600px) {
+  .start-text {
+    display: inline;
+  }
+  .tray-clock {
+    font-size: 8.5px;
+  }
+  .clock-date {
+    display: block;
+  }
+  .taskbar-tray {
+    gap: 4px;
+    padding: 1px 4px;
+  }
+}

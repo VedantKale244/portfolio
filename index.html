@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desktop Portfolio</title>
+  <meta name="description" content="An interactive retro desktop operating system portfolio experience.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=MS+Sans+Serif&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="desktop-screen" id="desktop">
+
+  <!-- Desktop Surface Area -->
+  <main class="desktop-canvas" id="desktopCanvas" aria-label="Desktop Surface">
+    <!-- Desktop selection marquee box (dynamically created on drag) -->
+    <div class="selection-box" id="selectionBox" hidden></div>
+  </main>
+
+  <!-- Right-Click Desktop Context Menu -->
+  <nav class="win-menu context-menu" id="contextMenu" hidden aria-label="Context Menu">
+    <div class="win-menu-item has-submenu" data-action="arrange">
+      <span class="menu-icon">
+        <svg viewBox="0 0 16 16" width="16" height="16"><rect x="2" y="2" width="5" height="5" fill="#000" /><rect x="9" y="2" width="5" height="5" fill="#000" /><rect x="2" y="9" width="5" height="5" fill="#000" /><rect x="9" y="9" width="5" height="5" fill="#000" /></svg>
+      </span>
+      <span class="menu-label"><u>A</u>rrange Icons</span>
+      <span class="submenu-arrow">▶</span>
+    </div>
+    <div class="win-menu-item" data-action="lineup">
+      <span class="menu-icon"></span>
+      <span class="menu-label">Line <u>u</u>p Icons</span>
+    </div>
+    <div class="win-menu-separator"></div>
+    <div class="win-menu-item" id="menuRefresh" data-action="refresh">
+      <span class="menu-icon">
+        <svg viewBox="0 0 16 16" width="16" height="16"><path d="M13.5 8A5.5 5.5 0 1 1 8 2.5v-2L12 3l-4 2.5V3.5a4.5 4.5 0 1 0 4.5 4.5h1z" fill="#000"/></svg>
+      </span>
+      <span class="menu-label"><u>R</u>efresh</span>
+    </div>
+    <div class="win-menu-separator"></div>
+    <div class="win-menu-item disabled">
+      <span class="menu-icon"></span>
+      <span class="menu-label"><u>P</u>aste</span>
+    </div>
+    <div class="win-menu-item disabled">
+      <span class="menu-icon"></span>
+      <span class="menu-label">Paste <u>S</u>hortcut</span>
+    </div>
+    <div class="win-menu-separator"></div>
+    <div class="win-menu-item has-submenu" data-action="new">
+      <span class="menu-icon">
+        <svg viewBox="0 0 16 16" width="16" height="16"><path d="M2 3h4l2 2h6v8H2V3z" fill="#E8B830" stroke="#000" stroke-width="0.8"/></svg>
+      </span>
+      <span class="menu-label"><u>N</u>ew</span>
+      <span class="submenu-arrow">▶</span>
+    </div>
+    <div class="win-menu-separator"></div>
+    <div class="win-menu-item" id="menuProperties" data-action="properties">
+      <span class="menu-icon">
+        <svg viewBox="0 0 16 16" width="16" height="16"><rect x="2" y="2" width="12" height="9" fill="#088" stroke="#000"/><rect x="5" y="11" width="6" height="2" fill="#888"/><rect x="3" y="13" width="10" height="1.5" fill="#444"/></svg>
+      </span>
+      <span class="menu-label">P<u>r</u>operties</span>
+    </div>
+  </nav>
+
+  <!-- Interactive Start Menu -->
+  <aside class="start-menu" id="startMenu" hidden aria-label="Start Menu">
+    <!-- Retro Vertical Banner -->
+    <div class="start-banner" aria-hidden="true">
+      <span class="banner-text"><b>Windows</b><small>98</small></span>
+    </div>
+    
+    <!-- Start Menu Item List -->
+    <div class="start-menu-items">
+      <div class="start-item" id="startPrograms" tabindex="0">
+        <span class="start-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <path d="M2 4h7l2 2h11v14H2V4z" fill="#FFCC00" stroke="#000" stroke-width="1.2"/>
+            <rect x="5" y="9" width="14" height="2" fill="#000080"/>
+            <rect x="5" y="13" width="10" height="2" fill="#000080"/>
+          </svg>
+        </span>
+        <span class="start-label"><u>P</u>rograms</span>
+        <span class="start-arrow">▶</span>
+      </div>
+
+      <div class="start-item" id="startDocuments" tabindex="0">
+        <span class="start-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <path d="M4 3h10l6 6v12H4V3z" fill="#FFF" stroke="#000" stroke-width="1.2"/>
+            <path d="M14 3v6h6" fill="#DDD" stroke="#000" stroke-width="1.2"/>
+            <line x1="7" y1="12" x2="17" y2="12" stroke="#000080" stroke-width="1.5"/>
+            <line x1="7" y1="15" x2="15" y2="15" stroke="#000080" stroke-width="1.5"/>
+          </svg>
+        </span>
+        <span class="start-label"><u>D</u>ocuments</span>
+        <span class="start-arrow">▶</span>
+      </div>
+
+      <div class="start-item" id="startSettings" tabindex="0">
+        <span class="start-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <circle cx="12" cy="12" r="5" fill="#808080" stroke="#000" stroke-width="1.2"/>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2" stroke="#000" stroke-width="2"/>
+          </svg>
+        </span>
+        <span class="start-label"><u>S</u>ettings</span>
+        <span class="start-arrow">▶</span>
+      </div>
+
+      <div class="start-item" id="startFind" tabindex="0">
+        <span class="start-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <circle cx="10" cy="10" r="6" fill="#FFF" stroke="#000" stroke-width="1.5"/>
+            <line x1="14.5" y1="14.5" x2="21" y2="21" stroke="#000" stroke-width="2.5"/>
+            <circle cx="9" cy="9" r="2" fill="#88D"/>
+          </svg>
+        </span>
+        <span class="start-label"><u>F</u>ind</span>
+        <span class="start-arrow">▶</span>
+      </div>
+
+      <div class="start-item" id="startHelp" tabindex="0">
+        <span class="start-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <path d="M4 3h16v18H4V3z" fill="#800080" stroke="#000" stroke-width="1.2"/>
+            <text x="12" y="16" fill="#FFF" font-family="'MS Sans Serif', sans-serif" font-weight="bold" font-size="14" text-anchor="middle">?</text>
+          </svg>
+        </span>
+        <span class="start-label"><u>H</u>elp</span>
+      </div>
+
+      <div class="start-item" id="startRun" tabindex="0">
+        <span class="start-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <rect x="3" y="5" width="18" height="14" fill="#FFF" stroke="#000" stroke-width="1.2"/>
+            <path d="M6 14l4-4-4-4" fill="none" stroke="#000" stroke-width="2"/>
+            <line x1="12" y1="14" x2="17" y2="14" stroke="#000" stroke-width="2"/>
+          </svg>
+        </span>
+        <span class="start-label"><u>R</u>un...</span>
+      </div>
+
+      <div class="win-menu-separator"></div>
+
+      <div class="start-item" id="startShutdown" tabindex="0">
+        <span class="start-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <circle cx="12" cy="12" r="8" fill="none" stroke="#CC0000" stroke-width="2"/>
+            <line x1="12" y1="4" x2="12" y2="12" stroke="#CC0000" stroke-width="2.5"/>
+          </svg>
+        </span>
+        <span class="start-label">Sh<u>u</u>t Down...</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Volume Slider Dialog Popup -->
+  <section class="win-dialog volume-popup" id="volumePopup" hidden aria-label="Volume Control">
+    <header class="win-titlebar">
+      <span class="win-title">Volume</span>
+      <button class="win-close-btn" id="volumeCloseBtn" aria-label="Close">✕</button>
+    </header>
+    <div class="volume-body">
+      <div class="volume-slider-col">
+        <label for="volRange">Volume</label>
+        <div class="slider-track-wrap">
+          <span class="slider-tick-max">-</span>
+          <input type="range" id="volRange" min="0" max="100" value="80" orient="vertical">
+          <span class="slider-tick-min">-</span>
+        </div>
+        <div class="mute-checkbox-wrap">
+          <input type="checkbox" id="volMute">
+          <label for="volMute"><u>M</u>ute</label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Date / Time Calendar Dialog Popup -->
+  <section class="win-dialog datetime-popup" id="datetimePopup" hidden aria-label="Date and Time Properties">
+    <header class="win-titlebar">
+      <span class="win-title">Date/Time Properties</span>
+      <button class="win-close-btn" id="datetimeCloseBtn" aria-label="Close">✕</button>
+    </header>
+    <div class="datetime-body">
+      <div class="datetime-tabs">
+        <div class="tab-button active">Date &amp; Time</div>
+        <div class="tab-button">Time Zone</div>
+      </div>
+      <div class="datetime-content">
+        <div class="calendar-preview" id="calendarGrid">
+          <div class="calendar-header" id="calendarMonthYear">October 2026</div>
+          <div class="calendar-days-row">
+            <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+          </div>
+          <div class="calendar-cells" id="calendarDays"></div>
+        </div>
+        <div class="clock-preview">
+          <div class="analog-clock" id="analogClock">
+            <div class="clock-face">
+              <div class="clock-hand hand-hour" id="handHour"></div>
+              <div class="clock-hand hand-minute" id="handMinute"></div>
+              <div class="clock-hand hand-second" id="handSecond"></div>
+              <div class="clock-pin"></div>
+            </div>
+          </div>
+          <div class="digital-clock-readout" id="popupDigitalTime">10:24:00 PM</div>
+        </div>
+      </div>
+      <div class="dialog-button-row">
+        <button class="win-button" id="datetimeOkBtn">OK</button>
+        <button class="win-button" id="datetimeCancelBtn">Cancel</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Display Properties Dialog Popup (Wallpaper info) -->
+  <section class="win-dialog properties-popup" id="propertiesPopup" hidden aria-label="Display Properties">
+    <header class="win-titlebar">
+      <span class="win-title">Display Properties</span>
+      <button class="win-close-btn" id="propertiesCloseBtn" aria-label="Close">✕</button>
+    </header>
+    <div class="properties-body">
+      <div class="datetime-tabs">
+        <div class="tab-button active">Background</div>
+        <div class="tab-button">Screen Saver</div>
+        <div class="tab-button">Appearance</div>
+        <div class="tab-button">Settings</div>
+      </div>
+      <div class="properties-content">
+        <div class="monitor-preview-container">
+          <div class="crt-monitor-case">
+            <div class="crt-screen">
+              <div class="crt-screen-img" id="crtScreenImg"></div>
+            </div>
+          </div>
+        </div>
+        <div class="wallpaper-selector-box">
+          <label>Select a background wallpaper:</label>
+          <div class="wallpaper-list" id="wallpaperList">
+            <div class="wallpaper-item selected" data-bg="assets/wallpaper.jpg">Classic Scenery (Active)</div>
+            <div class="wallpaper-item" data-bg="assets/wallpaper_ghibli.jpg">Ghibli Horizon</div>
+          </div>
+        </div>
+      </div>
+      <div class="dialog-button-row">
+        <button class="win-button" id="propsOkBtn">OK</button>
+        <button class="win-button" id="propsCancelBtn">Cancel</button>
+        <button class="win-button" id="propsApplyBtn">Apply</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Retro Shut Down Dialog Modal -->
+  <dialog class="win-dialog shutdown-modal" id="shutdownModal" aria-label="Shut Down Windows">
+    <header class="win-titlebar">
+      <span class="win-title">Shut Down Windows</span>
+      <button class="win-close-btn" id="shutdownCloseBtn" aria-label="Close">✕</button>
+    </header>
+    <div class="shutdown-body">
+      <div class="shutdown-icon-wrap">
+        <svg viewBox="0 0 32 32" width="32" height="32">
+          <rect x="2" y="4" width="28" height="20" rx="2" fill="#C0C0C0" stroke="#000" stroke-width="1.5"/>
+          <rect x="5" y="7" width="22" height="14" fill="#000080"/>
+          <rect x="12" y="24" width="8" height="4" fill="#808080" stroke="#000"/>
+          <rect x="8" y="27" width="16" height="2" fill="#808080" stroke="#000"/>
+        </svg>
+      </div>
+      <div class="shutdown-options">
+        <p class="shutdown-prompt">What do you want the computer to do?</p>
+        <div class="radio-option">
+          <input type="radio" id="shutRadio1" name="shutdownChoice" value="shutdown" checked>
+          <label for="shutRadio1"><u>S</u>hut down</label>
+        </div>
+        <div class="radio-option">
+          <input type="radio" id="shutRadio2" name="shutdownChoice" value="restart">
+          <label for="shutRadio2"><u>R</u>estart</label>
+        </div>
+        <div class="radio-option">
+          <input type="radio" id="shutRadio3" name="shutdownChoice" value="standby">
+          <label for="shutRadio3">Stand <u>b</u>y</label>
+        </div>
+      </div>
+    </div>
+    <div class="dialog-button-row">
+      <button class="win-button" id="shutdownConfirmBtn">OK</button>
+      <button class="win-button" id="shutdownCancelBtn">Cancel</button>
+      <button class="win-button" id="shutdownHelpBtn"><u>H</u>elp</button>
+    </div>
+  </dialog>
+
+  <!-- The Authentic Retro Taskbar (Always Fixed Bottom) -->
+  <footer class="taskbar" id="taskbar" role="navigation" aria-label="Windows Taskbar">
+    
+    <!-- Left Section: Start Button -->
+    <div class="taskbar-left">
+      <button class="start-btn" id="startBtn" aria-label="Start Button" aria-expanded="false" aria-controls="startMenu">
+        <!-- Iconic Windows 95 4-Color Flying Flag Logo -->
+        <span class="win-flag-icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16" width="16" height="16">
+            <!-- Trailing black pixel shadow -->
+            <path d="M3 2.5 L8 1.5 L8 7.5 L3 8.5 Z" fill="#000" opacity="0.3" transform="translate(1, 1)"/>
+            <path d="M8 1.5 L14 1 L14 7 L8 7.5 Z" fill="#000" opacity="0.3" transform="translate(1, 1)"/>
+            <path d="M3 8.5 L8 7.5 L8 13.5 L3 14.5 Z" fill="#000" opacity="0.3" transform="translate(1, 1)"/>
+            <path d="M8 7.5 L14 7 L14 13 L8 13.5 Z" fill="#000" opacity="0.3" transform="translate(1, 1)"/>
+            <!-- 4 Distinct Windows Colors -->
+            <!-- Top Left: Red -->
+            <path d="M2.5 2.2 C 4.5 1.8, 6.2 2.6, 7.8 1.8 L 7.8 7.2 C 6.2 8.0, 4.5 7.2, 2.5 7.6 Z" fill="#E81123"/>
+            <!-- Top Right: Green -->
+            <path d="M8.2 1.8 C 9.8 1.2, 11.8 1.5, 13.8 1.0 L 13.8 6.5 C 11.8 7.0, 9.8 6.7, 8.2 7.2 Z" fill="#00B050"/>
+            <!-- Bottom Left: Blue -->
+            <path d="M2.5 8.1 C 4.5 7.7, 6.2 8.5, 7.8 7.7 L 7.8 13.1 C 6.2 13.9, 4.5 13.1, 2.5 13.5 Z" fill="#0078D7"/>
+            <!-- Bottom Right: Yellow -->
+            <path d="M8.2 7.7 C 9.8 7.1, 11.8 7.4, 13.8 6.9 L 13.8 12.4 C 11.8 12.9, 9.8 12.6, 8.2 13.1 Z" fill="#FFC000"/>
+          </svg>
+        </span>
+        <span class="start-text">Start</span>
+      </button>
+
+      <!-- Taskbar Etched Divider -->
+      <div class="taskbar-divider" aria-hidden="true"></div>
+    </div>
+
+    <!-- Center Section: Running Tasks Container (prepared for apps when requested) -->
+    <div class="taskbar-tasks" id="taskbarTasks" role="tablist" aria-label="Running Applications">
+      <!-- Task buttons will be dynamically inserted here when apps launch -->
+    </div>
+
+    <!-- Right Section: System Tray / Notification Area -->
+    <div class="taskbar-tray" id="systemTray" role="region" aria-label="System Tray">
+      
+      <!-- Caret / Chevron Icon (^) -->
+      <button class="tray-icon-btn tray-expand" id="trayChevronBtn" title="Hidden icons" aria-label="Hidden icons">
+        <svg viewBox="0 0 10 10" width="10" height="10">
+          <polyline points="2,6 5,3 8,6" fill="none" stroke="#000" stroke-width="1.6" stroke-linecap="square"/>
+        </svg>
+      </button>
+
+      <!-- Speaker / Volume Icon -->
+      <button class="tray-icon-btn tray-volume" id="trayVolumeBtn" title="Volume: 80%" aria-label="Volume Control">
+        <svg viewBox="0 0 16 16" width="16" height="16">
+          <!-- Retro Windows Speaker -->
+          <path d="M2 5h3l4-4v14l-4-4H2V5z" fill="#000"/>
+          <!-- Soundwaves -->
+          <path d="M11 5c1 1.5 1 4.5 0 6" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M13 3c2.2 2.5 2.2 7.5 0 10" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <!-- CRT Computer Monitor Network / Display Icon -->
+      <button class="tray-icon-btn tray-monitor" id="trayMonitorBtn" title="System Status: Connected &amp; Online" aria-label="System Status">
+        <svg viewBox="0 0 16 16" width="16" height="16">
+          <rect x="2" y="2" width="12" height="9" rx="1" fill="#C0C0C0" stroke="#000" stroke-width="1.2"/>
+          <rect x="4" y="3.5" width="8" height="6" fill="#008080"/>
+          <!-- Screen glow / scanline -->
+          <rect x="5" y="4.5" width="6" height="1" fill="#20B2AA" opacity="0.8"/>
+          <rect x="6.5" y="11" width="3" height="2" fill="#808080" stroke="#000" stroke-width="0.8"/>
+          <line x1="4" y1="13.5" x2="12" y2="13.5" stroke="#000" stroke-width="1.2"/>
+        </svg>
+      </button>
+
+      <!-- Exact Two-Line Digital Time & Date matching the screenshot -->
+      <div class="tray-clock" id="trayClock" role="timer" aria-live="off" title="Double click to open Date/Time Properties">
+        <span class="clock-time" id="clockTime">10:24 PM</span>
+        <span class="clock-date" id="clockDate">26 Oct 2026</span>
+      </div>
+
+    </div>
+
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
