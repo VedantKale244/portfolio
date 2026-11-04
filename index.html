@@ -27,6 +27,27 @@
         visibility: hidden !important;
         opacity: 0 !important;
       }
+    
+      /* Windows XP Volume Icon & Modal Enhancements */
+      img[src*="volume-icon-sm"], img[src*="mute-icon-sm"] {
+        cursor: pointer !important;
+        padding: 3px !important;
+        margin: -3px 0 !important;
+        box-sizing: content-box !important;
+        border-radius: 2px !important;
+        transition: background 0.15s ease;
+      }
+      img[src*="volume-icon-sm"]:hover, img[src*="mute-icon-sm"]:hover {
+        background: rgba(255, 255, 255, 0.25) !important;
+      }
+      img[src*="volume-icon-sm"]:active, img[src*="mute-icon-sm"]:active {
+        background: rgba(0, 0, 0, 0.2) !important;
+      }
+      section.bg-window-blue-deactivated {
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.45) !important;
+        border: 1px solid #0055ea !important;
+        z-index: 1000000 !important;
+      }
     </style>
 
     <script>
