@@ -2406,165 +2406,132 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
 
 
   const MusicController = {
-
     getTracks() { return TRACKS_LIST; },
-
     getCurrentTrack() {
-
       if (window.__musicPlayer && window.__musicPlayer.currentTrack) {
-
         return window.__musicPlayer.currentTrack;
-
       }
-
       return TRACKS_LIST[currentTrackIdx];
-
     },
-
     isPlaying() {
-
       if (window.__musicPlayer) return window.__musicPlayer.isPlaying;
-
       return isCurrentlyPlaying;
-
     },
-
     playTrack(idOrQuery) {
-
       if (typeof stopClippySpeech === 'function') stopClippySpeech();
-
       let tr = null;
-
       let idx = -1;
-
       if (typeof idOrQuery === 'number') {
-
         idx = ((idOrQuery % TRACKS_LIST.length) + TRACKS_LIST.length) % TRACKS_LIST.length;
-
         tr = TRACKS_LIST[idx];
-
       } else if (idOrQuery) {
-
         const q = String(idOrQuery).toLowerCase().trim();
-
         idx = TRACKS_LIST.findIndex(t => t.id === q || t.name.toLowerCase().includes(q) || t.artist.toLowerCase().includes(q));
-
         if (idx !== -1) tr = TRACKS_LIST[idx];
-
       }
-
-
 
       if (!tr) {
-
         idx = currentTrackIdx;
-
         tr = TRACKS_LIST[idx];
-
       }
-
-
 
       currentTrackIdx = idx;
 
-
+      // Auto unmute if user explicitly triggers music
+      if (state.isMuted) {
+        state.isMuted = false;
+        saveState();
+      }
 
       if (window.__musicPlayer && window.__musicPlayer.playTrack) {
-
+        if (bgAudio && !bgAudio.paused) bgAudio.pause();
         const res = window.__musicPlayer.playTrack(tr.id);
-
         if (res) {
-
           isCurrentlyPlaying = true;
-
           updateClippyMusicNote(true);
-
+          if (typeof updateAllClippyMusicCards === 'function') {
+            updateAllClippyMusicCards(tr, true);
+          }
           return tr;
-
         }
-
       }
-
-
 
       if (!bgAudio) {
-
         bgAudio = new Audio();
-
       }
-
       bgAudio.src = `/musics/${tr.id}.mp3`;
-
-      bgAudio.volume = state.volume;
-
-      bgAudio.play().then(() => {
-
-        isCurrentlyPlaying = true;
-
-        updateClippyMusicNote(true);
-
-        showMusicBalloonToast(tr);
-
-      }).catch(() => { });
-
-
+      bgAudio.volume = (typeof state.volume === 'number' && state.volume > 0.05) ? state.volume : 0.6;
+      isCurrentlyPlaying = true;
+      updateClippyMusicNote(true);
+      const playPromise = bgAudio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          isCurrentlyPlaying = true;
+          updateClippyMusicNote(true);
+          showMusicBalloonToast(tr);
+          if (typeof updateAllClippyMusicCards === 'function') {
+            updateAllClippyMusicCards(tr, true);
+          }
+        }).catch((err) => {
+          console.warn("Background audio play error:", err);
+          isCurrentlyPlaying = false;
+          updateClippyMusicNote(false);
+          if (typeof updateAllClippyMusicCards === 'function') {
+            updateAllClippyMusicCards(tr, false);
+          }
+        });
+      }
 
       bgAudio.onended = () => {
-
         MusicController.next();
-
       };
 
-
-
       return tr;
-
     },
-
+    play(idOrQuery) {
+      if (idOrQuery !== undefined) {
+        return this.playTrack(idOrQuery);
+      }
+      if (this.isPlaying()) return this.getCurrentTrack();
+      this.resume();
+      return this.getCurrentTrack();
+    },
     togglePlay() {
-
       if (typeof stopClippySpeech === 'function') stopClippySpeech();
-
       if (window.__musicPlayer && window.__musicPlayer.toggle) {
-
         window.__musicPlayer.toggle();
-
         isCurrentlyPlaying = window.__musicPlayer.isPlaying;
-
         updateClippyMusicNote(isCurrentlyPlaying);
-
-        return isCurrentlyPlaying;
-
-      }
-
-      if (bgAudio) {
-
-        if (bgAudio.paused) {
-
-          bgAudio.play();
-
-          isCurrentlyPlaying = true;
-
-        } else {
-
-          bgAudio.pause();
-
-          isCurrentlyPlaying = false;
-
+        if (typeof updateAllClippyMusicCards === 'function') {
+          updateAllClippyMusicCards(this.getCurrentTrack(), isCurrentlyPlaying);
         }
-
-        updateClippyMusicNote(isCurrentlyPlaying);
-
         return isCurrentlyPlaying;
-
       }
-
-      MusicController.playTrack(0);
-
+      if (bgAudio && bgAudio.src) {
+        if (bgAudio.paused) {
+          if (state.isMuted) { state.isMuted = false; saveState(); }
+          bgAudio.volume = (typeof state.volume === 'number' && state.volume > 0.05) ? state.volume : 0.6;
+          bgAudio.play().then(() => {
+            isCurrentlyPlaying = true;
+            updateClippyMusicNote(true);
+            if (typeof updateAllClippyMusicCards === 'function') {
+              updateAllClippyMusicCards(this.getCurrentTrack(), true);
+            }
+          }).catch(err => console.warn(err));
+          isCurrentlyPlaying = true;
+        } else {
+          bgAudio.pause();
+          isCurrentlyPlaying = false;
+          updateClippyMusicNote(false);
+          if (typeof updateAllClippyMusicCards === 'function') {
+            updateAllClippyMusicCards(this.getCurrentTrack(), false);
+          }
+        }
+        return isCurrentlyPlaying;
+      }
+      this.playTrack(currentTrackIdx);
       return true;
-
     },
-
     next() {
       let tr;
       if (window.__musicPlayer && window.__musicPlayer.next) {
@@ -2597,39 +2564,43 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
     prevTrack() {
       return this.prev();
     },
-
     pause() {
-
       if (window.__musicPlayer && window.__musicPlayer.pause) {
-
         window.__musicPlayer.pause();
-
       }
-
       if (bgAudio && !bgAudio.paused) bgAudio.pause();
-
       isCurrentlyPlaying = false;
-
       updateClippyMusicNote(false);
-
-    },
-
-    resume() {
-
-      if (window.__musicPlayer && window.__musicPlayer.resume) {
-
-        window.__musicPlayer.resume();
-
+      if (typeof updateAllClippyMusicCards === 'function') {
+        updateAllClippyMusicCards(this.getCurrentTrack(), false);
       }
-
-      if (bgAudio && bgAudio.paused) bgAudio.play();
-
-      isCurrentlyPlaying = true;
-
-      updateClippyMusicNote(true);
-
+    },
+    resume() {
+      if (typeof stopClippySpeech === 'function') stopClippySpeech();
+      if (window.__musicPlayer && window.__musicPlayer.resume) {
+        window.__musicPlayer.resume();
+        isCurrentlyPlaying = true;
+        updateClippyMusicNote(true);
+        if (typeof updateAllClippyMusicCards === 'function') {
+          updateAllClippyMusicCards(this.getCurrentTrack(), true);
+        }
+        return;
+      }
+      if (bgAudio && bgAudio.src && bgAudio.paused) {
+        if (state.isMuted) { state.isMuted = false; saveState(); }
+        bgAudio.volume = (typeof state.volume === 'number' && state.volume > 0.05) ? state.volume : 0.6;
+        bgAudio.play().then(() => {
+          isCurrentlyPlaying = true;
+          updateClippyMusicNote(true);
+          if (typeof updateAllClippyMusicCards === 'function') {
+            updateAllClippyMusicCards(this.getCurrentTrack(), true);
+          }
+        }).catch(err => console.warn(err));
+        isCurrentlyPlaying = true;
+        return;
+      }
+      this.playTrack(currentTrackIdx);
     }
-
   };
 
 
@@ -2743,6 +2714,7 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
   }
 
   window.__updateAllClippyMusicCards = updateAllClippyMusicCards;
+  window.MusicController = MusicController;
 
 
   function triggerMatrixMode() {
@@ -3396,15 +3368,60 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
       };
     }
 
-    // 6. Music / Audio
+    // Music Controls: Specific pause / stop
+    if (/(pause\s*(music|song|track)|stop\s*(music|song|track))/i.test(q)) {
+      MusicController.pause();
+      const tr = MusicController.getCurrentTrack();
+      const cardHtml = createClippyMusicCardHTML(tr, false);
+      return {
+        title: "Windows XP Media Player ⏸️",
+        summary: `Music paused.<br/>${cardHtml}`,
+        actions: [
+          { label: "▶️ Resume Music", action: "music_play" },
+          { label: "⏭️ Next Track", action: "music_next" },
+          { label: "🎵 Open Player", action: "open_music" }
+        ]
+      };
+    }
+
+    // Music Controls: Specific next / skip
+    if (/(next\s*(song|track|music)|skip\s*(song|track))/i.test(q)) {
+      const tr = MusicController.next();
+      const cardHtml = createClippyMusicCardHTML(tr, true);
+      return {
+        title: "Windows XP Media Player ⏭️",
+        summary: `Skipped to next track!<br/>${cardHtml}`,
+        actions: [
+          { label: "⏸️ Pause", action: "music_pause" },
+          { label: "⏭️ Next Track", action: "music_next" },
+          { label: "⏮️ Prev Track", action: "music_prev" },
+          { label: "🎵 Open Player", action: "open_music" }
+        ]
+      };
+    }
+
+    // 6. Music / Audio (Auto-starts playback and renders live player card)
     if (/(music|song|play|track|audio|sound)/i.test(q)) {
+      const songQuery = q.replace(/play|music|song|track|the/gi, '').trim();
+      let tr = null;
+      if (songQuery.length >= 3) {
+        tr = MusicController.playTrack(songQuery);
+      } else {
+        tr = MusicController.play(currentTrackIdx);
+      }
+      if (!tr) tr = MusicController.getCurrentTrack();
+
+      const cardHtml = createClippyMusicCardHTML(tr, true);
+
       return {
         title: "Windows XP Media Player 🎵",
-        summary: "You can control background music directly through me or the 'My Musics' player on your desktop!",
+        summary: `Now playing background music! You can control playback right here, from your desktop tray, or by opening the full Media Player.<br/>${cardHtml}`,
         actions: [
-          { label: "▶️ Play Music", action: "music_play" },
-          { label: "⏭️ Next Track", action: "music_next" },
-          { label: "⏸️ Pause Music", action: "music_pause" }
+          { label: "⏸️ Pause", action: "music_pause" },
+          { label: "▶️ Play", action: "music_play" },
+          { label: "⏭️ Next", action: "music_next" },
+          { label: "⏮️ Prev", action: "music_prev" },
+          { label: "🎵 Open Player", action: "open_music" }
         ]
       };
     }
@@ -3552,6 +3569,20 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
 
       sendQueryFn('Tell me a joke');
 
+    } else if (actCode === 'music_play') {
+      MusicController.play(currentTrackIdx);
+      SoundManager.playClick();
+      const tr = MusicController.getCurrentTrack();
+      if (typeof updateAllClippyMusicCards === 'function') {
+        updateAllClippyMusicCards(tr, true);
+      }
+    } else if (actCode === 'music_pause') {
+      MusicController.pause();
+      SoundManager.playClick();
+      const tr = MusicController.getCurrentTrack();
+      if (typeof updateAllClippyMusicCards === 'function') {
+        updateAllClippyMusicCards(tr, false);
+      }
     } else if (actCode === 'music_toggle') {
       const isPlay = MusicController.togglePlay();
       SoundManager.playClick();
