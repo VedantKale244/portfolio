@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/office", "destination": "/index.html" },
+    { "source": "/((?!assets|img|sounds|musics|game|calendar|fonts|pdf|videos|favicon\\.ico|doom_player\\.html|resume_print\\.html|.*\\..*).*)", "destination": "/index.html" }
+  ]
+}
+

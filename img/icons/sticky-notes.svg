@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="noteGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffb91"/>
+      <stop offset="60%" stop-color="#fff268"/>
+      <stop offset="100%" stop-color="#fde047"/>
+    </linearGradient>
+    <linearGradient id="foldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4ba17"/>
+      <stop offset="50%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#fef08a"/>
+    </linearGradient>
+    <filter id="noteDrop" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="1.5" dy="2.5" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <!-- Main Sheet with cut corner -->
+  <path d="M 8 6 L 40 6 L 40 32 L 28 44 L 8 44 Z" fill="url(#noteGrad)" stroke="#cbb22a" stroke-width="0.8" filter="url(#noteDrop)"/>
+  <!-- Folded Corner -->
+  <path d="M 28 44 L 28 32 L 40 32 Z" fill="url(#foldGrad)" stroke="#b59c15" stroke-width="0.8"/>
+  <!-- Fold Shadow -->
+  <path d="M 27 43 L 27 31 L 39 31 Z" fill="#000000" opacity="0.12"/>
+  <!-- Hand-drawn Note Lines -->
+  <line x1="14" y1="15" x2="34" y2="15" stroke="#786c28" stroke-width="1.8" stroke-linecap="round" opacity="0.6"/>
+  <line x1="14" y1="21" x2="34" y2="21" stroke="#786c28" stroke-width="1.8" stroke-linecap="round" opacity="0.6"/>
+  <line x1="14" y1="27" x2="28" y2="27" stroke="#786c28" stroke-width="1.8" stroke-linecap="round" opacity="0.6"/>
+  <line x1="14" y1="33" x2="23" y2="33" stroke="#786c28" stroke-width="1.8" stroke-linecap="round" opacity="0.6"/>
+  <!-- Push Pin at Top Center -->
+  <circle cx="24" cy="7" r="2.8" fill="#e11d48" stroke="#9f1239" stroke-width="0.7"/>
+  <circle cx="23.2" cy="6.2" r="0.9" fill="#ffffff" opacity="0.8"/>
+</svg>
+

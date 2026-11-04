@@ -13,6 +13,8 @@ mimetypes.add_type('image/webp', '.webp')
 mimetypes.add_type('image/svg+xml', '.svg')
 mimetypes.add_type('audio/mpeg', '.mp3')
 mimetypes.add_type('image/x-icon', '.ico')
+mimetypes.add_type('application/wasm', '.wasm')
+mimetypes.add_type('application/zip', '.zip')
 
 class SPAHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
@@ -23,12 +25,10 @@ class SPAHandler(http.server.SimpleHTTPRequestHandler):
         super().end_headers()
 
     def do_GET(self):
-        # Redirect root to /office exactly like https://pauljaguin.com/office
+        # Root / and /office both serve SPA index.html
         if self.path == '/' or self.path == '':
-            self.send_response(302)
-            self.send_header('Location', '/office')
-            self.end_headers()
-            return
+            self.path = '/index.html'
+            return super().do_GET()
 
         clean_path = self.path.split('?')[0]
         full_path = os.path.join(DIRECTORY, clean_path.lstrip('/'))

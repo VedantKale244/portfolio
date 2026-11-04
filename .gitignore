@@ -1,0 +1,19 @@
+# Python & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+
+# Scratch & test scripts
+insert_gtavc_app.py
+update_bundle_gtavc.py
+check_bundle_pos.py
+*.bak
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+

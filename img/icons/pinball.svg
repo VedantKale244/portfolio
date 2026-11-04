@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <radialGradient id="tableBg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#1f114a"/>
+      <stop offset="70%" stop-color="#0f0729"/>
+      <stop offset="100%" stop-color="#050212"/>
+    </radialGradient>
+    <radialGradient id="ballGrad" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#e0e8f0"/>
+      <stop offset="70%" stop-color="#7a8c9e"/>
+      <stop offset="100%" stop-color="#344150"/>
+    </radialGradient>
+    <linearGradient id="flipperGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffcc00"/>
+      <stop offset="50%" stop-color="#ff6600"/>
+      <stop offset="100%" stop-color="#cc0033"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Table Base -->
+  <rect x="5" y="4" width="38" height="40" rx="8" fill="url(#tableBg)" stroke="#4d2db8" stroke-width="1.5"/>
+  <!-- Space Cadet Stars & Lane Tracks -->
+  <circle cx="16" cy="12" r="1" fill="#00ffff" opacity="0.8"/>
+  <circle cx="32" cy="10" r="1.2" fill="#ff00ff" opacity="0.8"/>
+  <circle cx="12" cy="24" r="0.8" fill="#ffffff" opacity="0.6"/>
+  <path d="M 9 32 C 9 14, 39 14, 39 32" fill="none" stroke="#6942f5" stroke-width="1" stroke-dasharray="2,2"/>
+  <!-- Round Bumpers -->
+  <circle cx="18" cy="18" r="4.5" fill="#e6007e" stroke="#ffffff" stroke-width="0.8" filter="url(#glow)"/>
+  <circle cx="30" cy="17" r="4.5" fill="#00d4ff" stroke="#ffffff" stroke-width="0.8" filter="url(#glow)"/>
+  <circle cx="24" cy="25" r="5" fill="#ffaa00" stroke="#ffffff" stroke-width="0.8" filter="url(#glow)"/>
+  <!-- Flippers -->
+  <path d="M 12 37 C 12 35, 21 39, 23 41 C 21 42, 13 41, 12 37 Z" fill="url(#flipperGrad)" stroke="#fff" stroke-width="0.5"/>
+  <path d="M 36 37 C 36 35, 27 39, 25 41 C 27 42, 35 41, 36 37 Z" fill="url(#flipperGrad)" stroke="#fff" stroke-width="0.5"/>
+  <!-- Silver Steel Ball -->
+  <circle cx="33" cy="28" r="5.5" fill="url(#ballGrad)" stroke="#1a2530" stroke-width="0.5" filter="url(#glow)"/>
+  <!-- Ball Highlight -->
+  <ellipse cx="31.5" cy="26" rx="1.5" ry="0.8" fill="#ffffff" opacity="0.9" transform="rotate(-30 31.5 26)"/>
+</svg>
+

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="binGradE" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4a90e2"/>
+      <stop offset="50%" stop-color="#2d6cb5"/>
+      <stop offset="100%" stop-color="#184b8c"/>
+    </linearGradient>
+    <linearGradient id="rimGradE" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d0e4f7"/>
+      <stop offset="100%" stop-color="#73a9e6"/>
+    </linearGradient>
+    <filter id="binShadowE" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="1" dy="2" stdDeviation="1.5" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <!-- Trash Bin Body (Empty) -->
+  <path d="M10 14 L14 43 C14 44.5 16 45 24 45 C32 45 34 44.5 34 43 L38 14 Z" fill="url(#binGradE)" filter="url(#binShadowE)"/>
+  <!-- Trash Bin Ribs -->
+  <path d="M15 16 L17 41 M20 16 L21 42 M24 16 L24 42.5 M28 16 L27 42 M33 16 L31 41" stroke="#6ba8f0" stroke-width="1.2" opacity="0.6"/>
+  <!-- Inside Shadow -->
+  <ellipse cx="24" cy="14" rx="13" ry="3" fill="#113563" opacity="0.7"/>
+  <!-- Bin Rim -->
+  <ellipse cx="24" cy="14" rx="14.5" ry="3.5" fill="none" stroke="#73a9e6" stroke-width="1.5"/>
+  <!-- Green Recycle Symbol -->
+  <g transform="translate(18, 24) scale(0.55)" fill="#48c734" stroke="#256e1a" stroke-width="0.6">
+    <path d="M11 2 L14 7 L8 7 Z"/>
+    <path d="M11 4 A 7 7 0 0 1 18 11 L16 11 A 5 5 0 0 0 11 6 Z"/>
+    <path d="M20 15 L17 10 L20 7 Z" transform="rotate(120 11 11)"/>
+    <path d="M11 4 A 7 7 0 0 1 18 11 L16 11 A 5 5 0 0 0 11 6 Z" transform="rotate(120 11 11)"/>
+    <path d="M20 15 L17 10 L20 7 Z" transform="rotate(240 11 11)"/>
+    <path d="M11 4 A 7 7 0 0 1 18 11 L16 11 A 5 5 0 0 0 11 6 Z" transform="rotate(240 11 11)"/>
+  </g>
+</svg>
+

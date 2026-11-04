@@ -14,13 +14,57 @@
 
     <link rel="icon" href="/favicon.ico">
 
+    <style id="xp-desktop-fouc-guard">
+      section.absolute.top-0.left-0 button {
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+      button.xp-app-deleted {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+      }
+    </style>
+
     <script>
-      // Ensure English is selected by default
+      // Ensure English is selected by default, volume is audible, and suppress old static clippy modal
       localStorage.setItem('currentLocale', 'en');
+      localStorage.setItem('clippyDismissed', 'true');
+      if (!localStorage.getItem('volume') || parseFloat(localStorage.getItem('volume')) === 0) {
+        localStorage.setItem('volume', '0.5');
+      }
+
+      // Ensure zero windows auto-open on page load/refresh & purge stale test positions
+      try {
+        localStorage.removeItem('windows');
+        sessionStorage.removeItem('windows');
+        localStorage.removeItem('openWindowIds');
+        sessionStorage.removeItem('openWindowIds');
+        sessionStorage.setItem('xp_portfolio_session_active', 'true');
+
+        // Clean out any bad/overlapping test coordinates
+        const clk = JSON.parse(localStorage.getItem('xp_clock_pos') || 'null');
+        if (clk && (clk.left === 480 || (typeof clk.left === 'number' && clk.left < 750))) {
+          localStorage.removeItem('xp_clock_pos');
+        }
+        const cal = JSON.parse(localStorage.getItem('xp_cal_pos') || 'null');
+        if (cal && (cal.left === 480 || (typeof cal.left === 'number' && cal.left < 750))) {
+          localStorage.removeItem('xp_cal_pos');
+        }
+        const st = JSON.parse(localStorage.getItem('xp_sticky_pos') || 'null');
+        if (st && st.left === 720) {
+          localStorage.removeItem('xp_sticky_pos');
+        }
+      } catch (e) {}
     </script>
-    <script src="https://js-dos.com/cdn/js-dos-api.js"></script>
+    <script src="/assets/js-dos-api.js"></script>
+    <script src="/assets/three.min.js"></script>
+    <script src="/assets/GLTFLoader.js"></script>
     <script type="module" crossorigin src="/assets/index-CfPOsN6U.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-mCwQ9zM9.css">
+    <link rel="stylesheet" href="/assets/portfolio-enhancements.css">
+    <script src="/assets/portfolio-enhancements.js" defer></script>
+    <script src="/assets/cursor-turtle.js" defer></script>
   </head>
   <body class="cursor-default">
     <div id="app"></div>
