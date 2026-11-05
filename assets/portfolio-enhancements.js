@@ -1778,9 +1778,9 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
 
 2. <b>ArthaSEC - High-Precision Financial RAG</b>
 
-   - 352+ SEC filings parsed into 32k structured chunks. Reciprocal Rank Fusion (BM25 + Dense).
+   - 352 SEC filings (31,962 chunks). Dual-mode retrieval: scoped BM25 + dense/BGE reranking.
 
-   - 73.3% Recall@10 with cross-encoder reranking and pgvector.
+   - 84.1% Recall@10 (88.4% annual), deterministic decimal calculations, 22.1ms p50 fast latency (544 passing tests).
 
 
 
@@ -2985,7 +2985,7 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
 
         "💼 <strong>Internship</strong>: Software Developer Intern at Karst Technologies (Jul&ndash;Sep 2026).",
 
-        "🧠 <strong>AI & Systems</strong>: Built GraphRAG and financial RAG engines, boosting Recall@10 from 42.6% to 73.3%.",
+        "🧠 <strong>AI & Systems</strong>: Built GraphRAG and financial RAG engines, boosting Recall@10 from 35.3% to 84.1% on 352 SEC filings.",
 
         "⚡ <strong>Problem Solving</strong>: 150+ LeetCode problems solved (Rating: 1,480); CodeChef 1,824."
 
@@ -3049,7 +3049,7 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
 
         "1. <strong>Neuro-Adaptive GraphRAG Platform</strong> (Jan&ndash;Apr 2026): Hybrid GraphRAG pipeline (Neo4j, Pinecone, Cohere reranking) with 534 passing tests across 36 modules, RAGAS evaluation gates, and 2.5s p95 latency threshold.",
 
-        "2. <strong>ArthaSEC &ndash; Financial RAG & Evidence Verification</strong> (May&ndash;Jul 2026): Retrieval engine over 352 SEC filings (32,000 chunks) raising Recall@10 from 42.6% to 73.3%, with citation verification and BGE reranking (~17ms p50 latency).",
+        "2. <strong>ArthaSEC &ndash; Auditable Financial RAG & Verification</strong> (May&ndash;Jul 2026): Retrieval engine over 352 SEC filings (31,962 chunks) raising Recall@10 from 35.3% to 84.1%, with citation verification, deterministic financial calculations, and 22.1ms p50 fast latency (544 passing tests).",
 
         "3. <strong>Adaptive Two-Tier Malware Detection</strong> (Research): Random Forest + sandbox detection for SQLi, XSS, and malware uploads across 9,000 API requests (98.1% accuracy; 99.30% accuracy on CIC-IDS/EMBER with 0.003ms CPU inference)."
 
@@ -3195,7 +3195,7 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
 
         "1. <strong>Production Rigor</strong>: His GraphRAG platform has 534 unit tests across 36 modules with strict RAGAS gates and p95 latency checks.",
 
-        "2. <strong>Measurable Impact</strong>: Raised real retrieval Recall@10 from 42.6% to 73.3% on 352 SEC filings.",
+        "2. <strong>Measurable Impact</strong>: Raised real retrieval Recall@10 from 35.3% to 84.1% on 352 SEC filings with 544 passing tests.",
 
         "3. <strong>Deep CS Fundamentals</strong>: 150+ LeetCode solved with strong C++/Python OOP and system design knowledge.",
 
@@ -3244,7 +3244,7 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
       bullets: [
         "🎓 <strong>Final-Year B.Tech CS</strong> at Pimpri Chinchwad University (PCU), Pune | CGPA: <strong>7.69/10</strong>",
         "🚀 <strong>Neuro-Adaptive GraphRAG</strong>: Neo4j + Pinecone + Cohere hybrid pipeline with 534 passing tests",
-        "📈 <strong>ArthaSEC Engine</strong>: Financial RAG over 352 SEC filings (32K chunks), BGE cross-encoder (17ms p50 latency)",
+        "📈 <strong>ArthaSEC Engine</strong>: Auditable financial RAG over 352 SEC filings (31,962 chunks), 84.1% Recall@10, 22.1ms p50 latency, 544 tests",
         "🛡️ <strong>Adaptive Malware Detection</strong>: Two-tier ML sandbox with 99.30% accuracy, 0.003ms CPU latency",
         "💼 <strong>SDE Intern</strong> at Karst Technologies (Jul 2026 &ndash; Sep 2026)",
         "🏆 <strong>CodeChef 3-Star (1824)</strong> &amp; LeetCode (1480, 150+ solved)"
@@ -3284,12 +3284,12 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
     // Specific Project: ArthaSEC
     if (/(arthasec|artha|sec\s*filing|financial\s*rag|10-k|evidence\s*verification|bm25|bge)/i.test(q)) {
       return {
-        title: "ArthaSEC &ndash; Financial RAG & Evidence Verification 📈",
-        summary: "Financial intelligence retrieval engine over 352 SEC filings (32,000 chunks):",
+        title: "ArthaSEC &ndash; Auditable Financial RAG & Verification Engine 📈",
+        summary: "Auditable financial intelligence & retrieval engine over 352 SEC filings (31,962 chunks):",
         bullets: [
-          "📊 <strong>Recall@10 jumped from 42.6% to 73.3%</strong> using BM25 + dense hybrid search.",
-          "📑 <strong>Citation verification</strong> and deterministic mathematical validation to flag unsupported financial metrics.",
-          "⚡ <strong>BGE cross-encoder reranking</strong> reaching ~17ms p50 latency in fast mode."
+          "📊 <strong>Recall@10 boosted from 35.3% to 84.1%</strong> (88.4% annual-only) on fixed 232-question benchmark via content-scoped BM25.",
+          "📑 <strong>Citation-backed answers & decimal calculations</strong>: Passed 53/53 real-corpus acceptance checks and 14 adversarial attack tests.",
+          "⚡ <strong>72% latency reduction down to 22.1ms p50</strong> (38.2ms p95), bounded FastAPI concurrency, and 544 passing tests."
         ],
         actions: [
           { label: "🐙 ArthaSEC Repo ↗", link: "https://github.com/VedantKale244/ArthaSEC" },
@@ -5621,7 +5621,7 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
 🏛️ Pimpri Chinchwad University (PCU), Pune | CGPA: <b>7.69/10</b><br><br>
 <b>⚙️ Systems &amp; Core Architecture:</b><br>
 • <b>Neuro-Adaptive GraphRAG</b>: Hybrid Neo4j + Pinecone + Cohere reranking pipeline with RAGAS evaluation gates (534 passing tests, 2.5s p95 latency threshold).<br>
-• <b>ArthaSEC Engine</b>: Financial retrieval &amp; verification across 352 SEC filings (32K chunks), BGE cross-encoder (17ms p50 latency).<br>
+• <b>ArthaSEC Engine</b>: Financial retrieval &amp; verification across 352 SEC filings (31,962 chunks), 84.1% Recall@10, 22.1ms p50 latency, 544 tests.<br>
 • <b>Two-Tier Malware Detection</b>: Random forest + evidential deep learning sandbox (99.30% accuracy, 0.003ms CPU inference).<br>
 • <b>SDE Intern</b> @ Karst Technologies (Jul 2026 – Sep 2026).<br><br>
 <b>💻 Coding &amp; Credentials:</b><br>
@@ -7711,7 +7711,7 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
 🏛️ Pimpri Chinchwad University (PCU), Pune | CGPA: <b>7.69/10</b><br><br>
 <b>⚙️ Systems &amp; Core Architecture:</b><br>
 • <b>Neuro-Adaptive GraphRAG</b>: Hybrid Neo4j + Pinecone + Cohere reranking pipeline with RAGAS evaluation gates (534 passing tests, 2.5s p95 latency threshold).<br>
-• <b>ArthaSEC Engine</b>: Financial retrieval &amp; verification across 352 SEC filings (32K chunks), BGE cross-encoder (17ms p50 latency).<br>
+• <b>ArthaSEC Engine</b>: Financial retrieval &amp; verification across 352 SEC filings (31,962 chunks), 84.1% Recall@10, 22.1ms p50 latency, 544 tests.<br>
 • <b>Two-Tier Malware Detection</b>: Random forest + evidential deep learning sandbox (99.30% accuracy, 0.003ms CPU inference).<br>
 • <b>SDE Intern</b> @ Karst Technologies (Jul 2026 – Sep 2026).<br><br>
 <b>💻 Coding &amp; Credentials:</b><br>

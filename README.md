@@ -25,10 +25,12 @@ An authentic, fully interactive **Windows XP Retro Desktop Portfolio** crafted f
 - **Reliability:** Automated RAGAS evaluation gates with 534 passing test cases.
 - **Performance:** Sub-2.5s p95 latency threshold across complex multi-hop queries.
 
-### 2. ArthaSEC Financial Intelligence Engine
-- **Scale:** High-throughput retrieval & factual verification across 352 SEC filings (32K text chunks).
-- **Inference:** BGE cross-encoder with 17ms p50 latency.
-- **Tech Stack:** Python, FastAPI, PostgreSQL, Vector Search.
+### 2. ArthaSEC Auditable Financial RAG Engine
+- **Scale:** 352 SEC filings, 31,962 accession-addressed chunks across 7 major filers.
+- **Retrieval Performance:** 84.1% Recall@10 (88.4% annual-only) on fixed 232-question benchmark, up from 35.3% baseline.
+- **Audited Answers:** Citation-backed financial answers & deterministic decimal calculations passing 53/53 real-corpus acceptance checks and 14 adversarial attack tests.
+- **Latency & Reliability:** 22.1 ms fast-mode p50 latency (72% reduction), bounded FastAPI concurrency, and 544 automated Python regression tests.
+- **Tech Stack:** Python, FastAPI, BM25, Hybrid Search, MiniLM, BGE Cross-Encoder, SQLAlchemy.
 
 ### 3. Two-Tier Evidential Malware Detection
 - **Mechanism:** Random forest fast triage coupled with an evidential deep learning sandbox for uncertain samples.

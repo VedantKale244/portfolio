@@ -199,7 +199,7 @@
 
 <h2>Professional Summary</h2>
 <p class="summary">
-Final-year B.Tech. CS student and Software Developer Intern targeting Software Development Engineer (SDE) roles in backend engineering and AI systems. Built RAG and GraphRAG pipelines that raised Recall@10 from 42.6% to 73.3%. Skilled in C++, Python, Java, and DSA; 150+ LeetCode problems solved.
+Final-year B.Tech. CS student and Software Developer Intern targeting Software Development Engineer (SDE) roles in backend engineering and AI systems. Built RAG and GraphRAG pipelines that raised Recall@10 from 35.3% to 84.1%. Skilled in C++, Python, Java, and DSA; 150+ LeetCode problems solved.
 </p>
 
 <h2>Education</h2>
@@ -251,7 +251,7 @@ Final-year B.Tech. CS student and Software Developer Intern targeting Software D
 </ul>
 
 <div class="item-header">
-  <span>ArthaSEC – Financial RAG and Evidence Verification Engine</span>
+  <span>ArthaSEC – Auditable Financial RAG and Evidence Verification Engine</span>
   <span>May 2026 – Jul 2026</span>
 </div>
 <div class="item-sub">
@@ -259,9 +259,9 @@ Final-year B.Tech. CS student and Software Developer Intern targeting Software D
   <span></span>
 </div>
 <ul>
-  <li>Built a financial retrieval engine over 352 SEC filings (32,000 chunks), raising Recall@10 from 42.6% to 73.3%.</li>
-  <li>Added citation verification and deterministic calculations to validate financial metrics and flag unsupported figures.</li>
-  <li>Optimized retrieval with BGE cross-encoder reranking, reaching about 17 ms p50 latency in fast mode.</li>
+  <li>Built a financial retrieval engine over 352 SEC filings (31,962 chunks), improving Recall@10 from 35.3% to 84.1% (88.4% annual-only) on a 232-question benchmark using metadata scoping and content-focused BM25.</li>
+  <li>Implemented citation-backed financial answers and deterministic growth calculations, validating company, period, and scale; passed 53 real-corpus acceptance checks and 14 constructed adversarial cases.</li>
+  <li>Reduced fast-mode p50 latency by 72%, from 77.5 ms to 22.1 ms, via indexed metadata filters and precomputed BM25 scoring; engineered bounded FastAPI concurrency with 544 Python regression tests.</li>
 </ul>
 
 <div class="item-header">
