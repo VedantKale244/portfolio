@@ -564,10 +564,31 @@
 
 
     saveState();
-
   }
 
-
+  function setDesktopWallpaper(wpKey, temporary = true) {
+    let targetUrl = '';
+    if (wpKey === 'custom' && state.customWallpaperUrl) {
+      targetUrl = state.customWallpaperUrl;
+    } else {
+      targetUrl = WALLPAPER_MAP[wpKey] || WALLPAPER_MAP.bliss;
+    }
+    const desktopBg = document.querySelector('.bg-office-pic') || document.querySelector('section');
+    if (desktopBg) {
+      desktopBg.style.backgroundImage = 'url("' + targetUrl + '")';
+      desktopBg.style.backgroundSize = 'cover';
+      desktopBg.style.backgroundPosition = 'center';
+      desktopBg.style.backgroundRepeat = 'no-repeat';
+      desktopBg.dataset.appliedWp = wpKey;
+    }
+    state.wallpaper = wpKey;
+    if (temporary) {
+      try { sessionStorage.setItem('xp_temp_wallpaper', wpKey); } catch(e) {}
+    } else {
+      saveState();
+    }
+  }
+  window.setDesktopWallpaper = setDesktopWallpaper;
 
   function applyCrt(enabled) {
 
@@ -1027,7 +1048,7 @@
 
                 <img src="/img/office-picture.webp" class="wallpaper-thumb" alt="Bliss">
 
-                <span class="wallpaper-title">Bliss (Classic)</span>
+                <span class="wallpaper-title">Bliss (Classic / Default)</span>
 
               </div>
 
@@ -2639,6 +2660,37 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
       updateClippyMusicNote(false);
       if (typeof updateAllClippyMusicCards === 'function') {
         updateAllClippyMusicCards(this.getCurrentTrack(), false);
+      }
+    },
+    stop() {
+      this.pause();
+      if (bgAudio) {
+        try {
+          bgAudio.pause();
+          bgAudio.currentTime = 0;
+        } catch(e) {}
+      }
+      if (window.__musicPlayer && window.__musicPlayer.pause) {
+        window.__musicPlayer.pause();
+      }
+      isCurrentlyPlaying = false;
+      updateClippyMusicNote(false);
+      if (typeof updateAllClippyMusicCards === 'function') {
+        updateAllClippyMusicCards(this.getCurrentTrack(), false);
+      }
+    },
+    getAudioElement() {
+      return bgAudio;
+    },
+    syncFromPlayer(trackId, isPlaying) {
+      if (trackId) {
+        const idx = TRACKS_LIST.findIndex(t => t.id === trackId);
+        if (idx !== -1) currentTrackIdx = idx;
+      }
+      isCurrentlyPlaying = !!isPlaying;
+      updateClippyMusicNote(isCurrentlyPlaying);
+      if (typeof updateAllClippyMusicCards === 'function') {
+        updateAllClippyMusicCards(this.getCurrentTrack(), isCurrentlyPlaying);
       }
     },
     resume() {
@@ -10171,6 +10223,7 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
     SoundManager.playClick();
 
   }
+  window.arrangeDesktopIcons = arrangeDesktopIcons;
 
 
 
@@ -10339,6 +10392,11 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
               <span class="xp-menu-text">Align to Grid</span>
 
             </div>
+            <div class="xp-menu-separator"></div>
+            <div class="xp-menu-item" data-action="arrange_default">
+              <span class="xp-menu-icon">⏮️</span>
+              <span class="xp-menu-text">Reset to Default Order</span>
+            </div>
 
           </div>
 
@@ -10364,28 +10422,19 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
 
         <div class="xp-menu-separator"></div>
 
-        <div class="xp-menu-item" data-action="music_toggle">
-
-          <span class="xp-menu-icon">🎵</span>
-
-          <span class="xp-menu-text">Play / Pause Music</span>
-
-        </div>
-
-        <div class="xp-menu-item" data-action="music_next">
-
-          <span class="xp-menu-icon">⏭️</span>
-
-          <span class="xp-menu-text">Next Song</span>
-
-        </div>
-
-        <div class="xp-menu-item" data-action="open_music">
-
-          <span class="xp-menu-icon">📻</span>
-
-          <span class="xp-menu-text">My Musics</span>
-
+        <div id="ctx-music-dynamic-group">
+          <div class="xp-menu-item" data-action="music_toggle">
+            <span class="xp-menu-icon">🎵</span>
+            <span class="xp-menu-text">Play / Pause Music</span>
+          </div>
+          <div class="xp-menu-item" data-action="music_next">
+            <span class="xp-menu-icon">⏭️</span>
+            <span class="xp-menu-text">Next Song</span>
+          </div>
+          <div class="xp-menu-item" data-action="open_music">
+            <span class="xp-menu-icon">📻</span>
+            <span class="xp-menu-text">My Musics</span>
+          </div>
         </div>
 
         <div class="xp-menu-separator"></div>
@@ -10483,6 +10532,10 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
               <span class="xp-menu-text">Azul</span>
 
             </div>
+            <div class="xp-menu-item" data-action="wp_alps">
+              <span class="xp-menu-icon">🏔️</span>
+              <span class="xp-menu-text">Alps</span>
+            </div>
 
           </div>
 
@@ -10538,22 +10591,31 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
 
           arrangeDesktopIcons('grid');
 
+        } else if (act === 'arrange_default') {
+          resetDesktopIconsToDefault();
+          SoundManager.playClick();
+          showXpNotification("Desktop", "Icons reset to default Windows XP layout.");
         } else if (act === 'refresh') {
-
+          resetDesktopIconsToDefault();
+          try { sessionStorage.removeItem('xp_temp_wallpaper'); } catch(e) {}
+          setDesktopWallpaper('bliss');
+          SoundManager.playClick();
           const icons = document.querySelectorAll('.desktop-icon-draggable');
-
           icons.forEach(ic => {
-
-            ic.style.opacity = '0.25';
-
-            setTimeout(() => ic.style.opacity = '1', 90);
-
+            ic.style.transition = 'none';
+            ic.style.opacity = '0.15';
           });
-
+          setTimeout(() => {
+            icons.forEach(ic => {
+              ic.style.transition = 'opacity 0.12s ease';
+              ic.style.opacity = '1';
+            });
+          }, 60);
           initDesktopDraggableAndMenus();
           initIndianFlagTray();
           initStickyNotes();
           initCertificationsEnhancement();
+          showXpNotification("Desktop", "Desktop refreshed & default layout restored.");
 
         } else if (act === 'paste') {
 
@@ -10602,6 +10664,11 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
         } else if (act === 'music_toggle') {
 
           MusicController.togglePlay();
+
+        } else if (act === 'music_stop') {
+          MusicController.stop();
+          SoundManager.playClick();
+          showXpNotification("Music Player", "Music stopped.");
 
         } else if (act === 'music_next') {
 
@@ -10735,8 +10802,32 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
 
 
 
+      // Dynamically render music controls with live track title & stop option
+      const musicContainer = menu.querySelector('#ctx-music-dynamic-group');
+      if (musicContainer && typeof MusicController !== 'undefined') {
+        const isPlaying = MusicController.isPlaying();
+        const curTrack = MusicController.getCurrentTrack();
+        const trackName = curTrack ? (curTrack.name || curTrack.title || 'Track') : '';
+        musicContainer.innerHTML = `
+          <div class="xp-menu-item" data-action="music_toggle">
+            <span class="xp-menu-icon">${isPlaying ? '⏸️' : '▶️'}</span>
+            <span class="xp-menu-text">${isPlaying ? 'Pause Music' : 'Play Music'}${trackName ? ' (' + trackName + ')' : ''}</span>
+          </div>
+                    <div class="xp-menu-item" data-action="music_stop">
+            <span class="xp-menu-icon">⏹️</span>
+            <span class="xp-menu-text">Stop / Turn Off Music</span>
+          </div>
+          <div class="xp-menu-item" data-action="music_next">
+            <span class="xp-menu-icon">⏭️</span>
+            <span class="xp-menu-text">Next Song</span>
+          </div>
+          <div class="xp-menu-item" data-action="open_music">
+            <span class="xp-menu-icon">📻</span>
+            <span class="xp-menu-text">My Musics</span>
+          </div>
+        `;
+      }
       menu.style.display = 'block';
-
       positionMenu(menu, e.clientX, e.clientY);
 
     });
@@ -11041,7 +11132,39 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
 
 
 
+  function resetDesktopIconsToDefault() {
+    try {
+      localStorage.removeItem('xp_desktop_icon_positions');
+      sessionStorage.removeItem('xp_desktop_icon_positions');
+    } catch (e) {}
+
+    const iconButtons = Array.from(document.querySelectorAll('section.absolute.top-0.left-0 button:not(.xp-app-deleted), button.desktop-icon-draggable:not(.xp-app-deleted)'));
+    if (!iconButtons.length) return;
+
+    const { maxRows } = getDesktopGridDimensions();
+    const rowsPerCol = maxRows || 7;
+
+    iconButtons.forEach((btn, index) => {
+      const col = Math.floor(index / rowsPerCol);
+      const row = index % rowsPerCol;
+      const x = col * GRID_COL_WIDTH + GRID_ORIGIN_X;
+      const y = row * GRID_ROW_HEIGHT + GRID_ORIGIN_Y;
+
+      btn.style.left = x + 'px';
+      btn.style.top = y + 'px';
+      btn.style.position = 'absolute';
+      btn.dataset.col = col;
+      btn.dataset.row = row;
+    });
+  }
+  window.resetDesktopIconsToDefault = resetDesktopIconsToDefault;
+
   function arrangeDesktopIcons(sortMode) {
+    if (sortMode === 'default' || sortMode === 'reset') {
+      resetDesktopIconsToDefault();
+      SoundManager.playClick();
+      return;
+    }
 
     const iconButtons = Array.from(document.querySelectorAll('section.absolute.top-0.left-0 button:not(.xp-app-deleted), button.desktop-icon-draggable:not(.xp-app-deleted)'));
 
@@ -11131,7 +11254,7 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
 
 
 
-    saveCustomPositions(savedPositions);
+    try { sessionStorage.setItem('xp_desktop_icon_positions', JSON.stringify(savedPositions)); } catch(e) {}
 
     SoundManager.playClick();
 
@@ -11140,6 +11263,8 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
 
 
 
+
+  window.arrangeDesktopIcons = arrangeDesktopIcons;
 
   // UNIVERSAL INTERACTIVE BUTTONS & CONTROLS SYSTEM
 
@@ -13228,6 +13353,7 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
         function initVolumeModalObserver() {
       function isVolumePopup(el) {
         if (!el || !(el instanceof Element)) return false;
+        if (el.classList.contains('rounded-t-lg') || el.querySelector('.border-window-header-bot') || el.querySelector('.minimize-button')) return false;
         const isTrayModal = el.classList.contains('bottom-10') || el.classList.contains('w-24') || (el.className && el.className.includes('bottom-10'));
         return isTrayModal && !!el.querySelector('input.slider, input[type="range"]') && !!el.querySelector('div.bg-light-yellow');
       }

@@ -4801,3 +4801,13 @@ section.bottom-10[class*="w-24"] div.bg-light-yellow {
   margin-top: 28px !important;
   padding-top: 6px !important;
 }
+
+/* Strict protection against window titlebar button stretching */
+.button-window-global-layout,
+.minimize-button,
+.maximize-button,
+.close-button {
+  height: 21px !important;
+  max-height: 21px !important;
+  flex-shrink: 0 !important;
+}
