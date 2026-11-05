@@ -30,24 +30,25 @@
     
       /* Windows XP Volume Icon & Modal Enhancements */
 
-      /* Authentic Windows XP Master Volume Slider Track & Thumb */
-      section.bg-window-blue-deactivated input[type="range"].slider,
-      .slider[data-v-9d5b1ee1] {
+            /* Authentic Windows XP Master Volume Slider Track & Thumb */
+      .slider[data-v-9d5b1ee1],
+      section.bottom-10 input[type="range"].slider {
         -webkit-appearance: none !important;
         appearance: none !important;
         writing-mode: vertical-lr !important;
         direction: rtl !important;
         width: 26px !important;
-        height: 130px !important;
+        height: 105px !important;
         background: transparent !important;
         cursor: pointer !important;
-        margin: 0 auto !important;
-        padding: 0 !important;
+        margin: 4px auto !important;
+        padding: 6px 0 !important;
         outline: none !important;
         overflow: visible !important;
+        box-sizing: border-box !important;
       }
-      section.bg-window-blue-deactivated input[type="range"].slider::-webkit-slider-runnable-track,
-      .slider[data-v-9d5b1ee1]::-webkit-slider-runnable-track {
+      .slider[data-v-9d5b1ee1]::-webkit-slider-runnable-track,
+      section.bottom-10 input[type="range"].slider::-webkit-slider-runnable-track {
         width: 4px !important;
         height: 100% !important;
         background: #ffffff !important;
@@ -59,8 +60,8 @@
         border-radius: 1px !important;
         margin: 0 auto !important;
       }
-      section.bg-window-blue-deactivated input[type="range"].slider::-webkit-slider-thumb,
-      .slider[data-v-9d5b1ee1]::-webkit-slider-thumb {
+      .slider[data-v-9d5b1ee1]::-webkit-slider-thumb,
+      section.bottom-10 input[type="range"].slider::-webkit-slider-thumb {
         -webkit-appearance: none !important;
         appearance: none !important;
         width: 22px !important;
@@ -73,25 +74,25 @@
         cursor: pointer !important;
         margin-left: -9px !important;
       }
-      section.bg-window-blue-deactivated input[type="range"].slider::-webkit-slider-thumb:hover,
-      .slider[data-v-9d5b1ee1]::-webkit-slider-thumb:hover {
+      .slider[data-v-9d5b1ee1]::-webkit-slider-thumb:hover,
+      section.bottom-10 input[type="range"].slider::-webkit-slider-thumb:hover {
         background: linear-gradient(to bottom, #ffffff 0%, #f6f4eb 50%, #e5e2d5 100%) !important;
         border-color: #316ac5 !important;
       }
-      section.bg-window-blue-deactivated input[type="range"].slider::-webkit-slider-thumb:active,
-      .slider[data-v-9d5b1ee1]::-webkit-slider-thumb:active {
+      .slider[data-v-9d5b1ee1]::-webkit-slider-thumb:active,
+      section.bottom-10 input[type="range"].slider::-webkit-slider-thumb:active {
         background: linear-gradient(to bottom, #d8d4c4 0%, #ece9d8 100%) !important;
         box-shadow: inset 1px 1px 1px rgba(0,0,0,0.4) !important;
       }
-      section.bg-window-blue-deactivated input[type="range"].slider::-moz-range-track,
-      .slider[data-v-9d5b1ee1]::-moz-range-track {
+      .slider[data-v-9d5b1ee1]::-moz-range-track,
+      section.bottom-10 input[type="range"].slider::-moz-range-track {
         width: 4px !important;
         height: 100% !important;
         background: #fff !important;
         border: 1px solid #716f64 !important;
       }
-      section.bg-window-blue-deactivated input[type="range"].slider::-moz-range-thumb,
-      .slider[data-v-9d5b1ee1]::-moz-range-thumb {
+      .slider[data-v-9d5b1ee1]::-moz-range-thumb,
+      section.bottom-10 input[type="range"].slider::-moz-range-thumb {
         width: 22px !important;
         height: 11px !important;
         background: linear-gradient(to bottom, #fcfbfa 0%, #ece9d8 50%, #d8d4c4 100%) !important;
@@ -113,10 +114,16 @@
       img[src*="volume-icon-sm"]:active, img[src*="mute-icon-sm"]:active {
         background: rgba(0, 0, 0, 0.2) !important;
       }
-      section.bg-window-blue-deactivated {
+      section.bottom-10.w-24,
+      section.bottom-10[class*="w-24"] {
         box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.45) !important;
         border: 1px solid #0055ea !important;
         z-index: 1000000 !important;
+      }
+      section.bottom-10.w-24 div.bg-light-yellow,
+      section.bottom-10[class*="w-24"] div.bg-light-yellow {
+        margin-top: 28px !important;
+        padding-top: 6px !important;
       }
     </style>
 

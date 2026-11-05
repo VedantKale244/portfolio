@@ -2453,7 +2453,7 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
       if (propLabel) propLabel.textContent = isMuted ? 'Muted' : `${Math.round(vol * 100)}%`;
 
       // 5. Update Vue Volume Modal slider and live label if open
-      const modalSlider = document.querySelector('section.bg-window-blue-deactivated input.slider');
+      const modalSlider = document.querySelector('section.bottom-10 input.slider, section[class*="w-24"] input.slider, section.w-24 input.slider');
       if (modalSlider && Math.abs(parseFloat(modalSlider.value) - vol) > 0.01) {
         modalSlider.value = vol;
       }
@@ -13226,11 +13226,26 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
 
 
         function initVolumeModalObserver() {
+      function isVolumePopup(el) {
+        if (!el || !(el instanceof Element)) return false;
+        const isTrayModal = el.classList.contains('bottom-10') || el.classList.contains('w-24') || (el.className && el.className.includes('bottom-10'));
+        return isTrayModal && !!el.querySelector('input.slider, input[type="range"]') && !!el.querySelector('div.bg-light-yellow');
+      }
+
+      function findVolumeModal() {
+        const candidates = document.querySelectorAll('section.bottom-10, section[class*="w-24"], section.w-24');
+        for (const c of candidates) {
+          if (isVolumePopup(c)) return c;
+        }
+        return null;
+      }
+
       function enhanceModal(modal) {
-        if (!modal || modal.dataset.xpEnhanced === 'true') return;
+        if (!isVolumePopup(modal)) return;
+        if (modal.dataset.xpEnhanced === 'true') return;
         modal.dataset.xpEnhanced = 'true';
 
-        // 1. Title
+        // 1. Title - strictly only for the volume popup
         const h4 = modal.querySelector('h4');
         if (h4) h4.textContent = 'Volume';
 
@@ -13245,6 +13260,10 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
           slider.addEventListener('input', (ev) => {
             const v = parseFloat(ev.target.value);
             VolumeManager.setVolume(v, false);
+            const textEl = modal.querySelector('#xp-tray-vol-text');
+            if (textEl && !VolumeManager.isMuted()) {
+              textEl.textContent = Math.round(v * 100) + '%';
+            }
           });
 
           slider.addEventListener('change', () => {
@@ -13252,50 +13271,60 @@ Targeting backend engineering, high-throughput systems, and enterprise AI retrie
           });
         }
 
-        // 3. Adjust container layout so Mute checkbox & percentage are clearly visible
-        const container = modal.querySelector('div.bg-light-yellow') || modal;
-        if (container) {
-          container.style.height = 'auto';
-          container.style.paddingBottom = '6px';
-          const innerFlex = container.querySelector('.h-full');
+        // 3. Adjust yellow container layout:
+        // Header is h-7 (28px). Setting margin-top: 28px ensures the slider thumb
+        // is never hidden under the blue title bar at 100%!
+        const yellowContainer = modal.querySelector('div.bg-light-yellow');
+        if (yellowContainer) {
+          yellowContainer.style.setProperty('margin-top', '28px', 'important');
+          yellowContainer.style.height = 'auto';
+          yellowContainer.style.paddingTop = '6px';
+          yellowContainer.style.paddingBottom = '6px';
+          
+          const innerFlex = yellowContainer.querySelector('.h-full') || yellowContainer.querySelector('.flex.items-center');
           if (innerFlex) {
             innerFlex.classList.remove('h-full');
-            innerFlex.style.height = '130px';
+            innerFlex.style.height = '110px';
           }
-        }
-        if (container && !modal.querySelector('#xp-tray-vol-text')) {
-          const infoDiv = document.createElement('div');
-          infoDiv.style.cssText = 'padding: 4px 6px; text-align: center; border-top: 1px solid #d4d0c8; margin-top: 4px;';
-          
-          const isMuted = VolumeManager.isMuted();
-          const curVol = Math.round(VolumeManager.getVolume() * 100);
 
-          infoDiv.innerHTML = `
-            <div id="xp-tray-vol-text" style="font-weight:bold; font-size:11px; color:#1e3a8a; margin-bottom:4px;">
-              ${isMuted ? 'Muted' : curVol + '%'}
-            </div>
-            <label style="display:flex; align-items:center; justify-content:center; gap:5px; font-size:11px; font-family:'Tahoma',sans-serif; cursor:pointer; color:#111;">
-              <input type="checkbox" id="xp-tray-vol-mute-checkbox" ${isMuted ? 'checked' : ''} style="cursor:pointer;" />
-              <span>Mute</span>
-            </label>
-          `;
-          container.appendChild(infoDiv);
+          if (!modal.querySelector('#xp-tray-vol-text')) {
+            const infoDiv = document.createElement('div');
+            infoDiv.style.cssText = 'padding: 4px 6px; text-align: center; border-top: 1px solid #d4d0c8; margin-top: 4px;';
+            
+            const isMuted = VolumeManager.isMuted();
+            const curVol = Math.round(VolumeManager.getVolume() * 100);
 
-          const muteBox = infoDiv.querySelector('#xp-tray-vol-mute-checkbox');
-          muteBox.addEventListener('change', (ev) => {
-            VolumeManager.setVolume(slider ? slider.value : VolumeManager.getVolume(), ev.target.checked);
-            SoundManager.playClick();
-          });
+            infoDiv.innerHTML = `
+              <div id="xp-tray-vol-text" style="font-weight:bold; font-size:11px; color:#1e3a8a; margin-bottom:4px;">
+                ${isMuted ? 'Muted' : curVol + '%'}
+              </div>
+              <label style="display:flex; align-items:center; justify-content:center; gap:5px; font-size:11px; font-family:'Tahoma',sans-serif; cursor:pointer; color:#111;">
+                <input type="checkbox" id="xp-tray-vol-mute-checkbox" ${isMuted ? 'checked' : ''} style="cursor:pointer;" />
+                <span>Mute</span>
+              </label>
+            `;
+            yellowContainer.appendChild(infoDiv);
+
+            const muteBox = infoDiv.querySelector('#xp-tray-vol-mute-checkbox');
+            muteBox.addEventListener('change', (ev) => {
+              VolumeManager.setVolume(slider ? slider.value : VolumeManager.getVolume(), ev.target.checked);
+              SoundManager.playClick();
+              const textEl = modal.querySelector('#xp-tray-vol-text');
+              if (textEl) {
+                textEl.textContent = ev.target.checked ? 'Muted' : Math.round(VolumeManager.getVolume() * 100) + '%';
+              }
+            });
+          }
         }
       }
 
-      // Check right now if modal is already open
-      const existing = document.querySelector('section.bg-window-blue-deactivated');
+      // Check right now if volume modal is already open
+      const existing = findVolumeModal();
       if (existing) enhanceModal(existing);
 
-      // Watch for modal being opened
+      // Watch for volume modal being opened
       const obs = new MutationObserver(() => {
-        const m = document.querySelector('section.bg-window-blue-deactivated');
+        const m = findVolumeModal();
         if (m) enhanceModal(m);
       });
       obs.observe(document.body, { childList: true, subtree: true });
